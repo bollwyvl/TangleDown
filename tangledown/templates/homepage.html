@@ -1,4 +1,5 @@
 {% extends "banner_base.html" %}
+{% load markup %}
 
 {% load i18n %}
 
@@ -7,25 +8,9 @@
 {% block body_class %}home{% endblock %}
 
 {% block banner %}
-    <h1>{% trans "Welcome to Pinax" %}</h1>
+    <h1>{% trans "Welcome to TangleDown" %}</h1>
     <p>
-        {% blocktrans %}
-        <b>Pinax</b> is a <a href="http://djangoproject.com/">Django</a>
-        project intended to provide a starting point for websites. By
-        integrating numerous reusable Django apps to take care of the
-        things that many sites have in common, it lets you focus on what
-        makes your site different.
-        {% endblocktrans %}
+        {{ welcome|markdown}}
     </p>
     
-    <h2>About Zero Project</h2>
-    <p>
-        {% blocktrans %}
-        This project lays the foundation for all other Pinax starter projects. It
-        provides the project directory layout and some key infrastructure apps on
-        which the other starter projects are based.
-        {% endblocktrans %}
-    </p>
-    
-    <p><a href="http://pinaxproject.com/" class="btn primary large">{% trans "Learn more &raquo;" %}</a></p>
 {% endblock %}

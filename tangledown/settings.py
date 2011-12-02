@@ -83,6 +83,8 @@ STATICFILES_FINDERS = [
     "compressor.finders.CompressorFinder",
 ]
 
+SERVE_MEDIA = True
+
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
@@ -138,6 +140,7 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.messages",
     "django.contrib.humanize",
+    'django.contrib.markup',
     
     "pinax.templatetags",
     
@@ -152,6 +155,8 @@ INSTALLED_APPS = [
     # Pinax
     
     # project
+    "luau",
+    "tangle",
 ]
 
 FIXTURE_DIRS = [
@@ -172,3 +177,5 @@ try:
     from local_settings import *
 except ImportError:
     pass
+
+LUAU_DEFAULT_SLUG = 'Home'
