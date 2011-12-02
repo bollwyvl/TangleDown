@@ -5,8 +5,11 @@ from django.template import RequestContext
 
 from util.shortcuts import context_response
 
+from luau.models import WikiPage
+
 def home(request):
     ctxt = {}
-    ctxt['welcome'] = open('content/welcome.markdown').read()
+    
+    ctxt['sample'] = WikiPage.objects.order_by('?')[0]
     
     return context_response(request, 'homepage.html', ctxt)

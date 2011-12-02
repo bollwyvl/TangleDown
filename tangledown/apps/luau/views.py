@@ -9,6 +9,9 @@ from luau.models import WikiPage
 from luau.forms import WikiPageForm
 
 def show_page(request, page_slug=None):
+    """
+    Show a WikiPage (or redirect to LUAU_DEFAULT_SLUG)
+    """
     if not page_slug:
         return redirect('luau.views.show_page', page_slug=settings.LUAU_DEFAULT_SLUG)
         
@@ -22,7 +25,9 @@ def show_page(request, page_slug=None):
     return context_response(request, 'luau/show.html', ctxt)
 
 def edit_page(request, page_slug=None):
-    
+    """
+    Edit a WikiPage
+    """
     try:
         page = WikiPage.objects.get(name=page_slug)
     except WikiPage.DoesNotExist:
@@ -42,4 +47,4 @@ def edit_page(request, page_slug=None):
         )
     
     return context_response(request, 'luau/edit.html', ctxt)
-    
+ 

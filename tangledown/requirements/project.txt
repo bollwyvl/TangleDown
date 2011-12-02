@@ -6,5 +6,4 @@
 # Put project-specific requirements here.
 # See http://pip-installer.org/requirement-format.html for more information.
 sympy==0.7.1
-django-wakawaka==0.3
 Markdown==2.1.0
