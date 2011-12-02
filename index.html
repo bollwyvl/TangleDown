@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    
+<!-- Mirrored from localhost:8000/ by HTTrack Website Copier/3.x [XR&CO'2010], Fri, 02 Dec 2011 22:51:21 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8"><!-- /Added by HTTrack -->
+<head>
+        <meta charset="utf-8" />
+        <title>tangledown.org : Welcome</title>
+        <!-- HTML5 shim, for IE6-8 support of HTML elements -->
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <link rel="shortcut icon" href="site_media/static/img/favicon.ico" />
+        <link rel="stylesheet" href="site_media/static/css/bootstrap.min.css">
+        <link rel="stylesheet" href="site_media/static/css/extra.css">
+        <script src="site_media/static/js/jquery-1.7.min.js"></script>
+        <script src="site_media/static/js/jquery.form.js"></script>
+        <script src="site_media/static/js/bootstrap-alerts.js"></script>
+        <script src="site_media/static/js/bootstrap-twipsy.js"></script>
+        <script src="site_media/static/js/bootstrap-popover.js"></script>
+        <script src="site_media/static/js/bootstrap-dropdown.js"></script>
+        <script src="site_media/static/js/bootstrap-tabs.js"></script>
+        <script src="site_media/static/js/bootstrap-scrollspy.js"></script>
+        <script src="site_media/static/js/bootstrap-buttons.js"></script>
+        <script src="site_media/static/js/theme.js"></script>
+        <script src="site_media/static/js/pinax.modal.js"></script>
+        
+            
+
+
+<!-- TangleDown -->
+<script type="text/javascript" src="site_media/static/js/TangleDown.js"></script>
+
+<!-- Tangle -->
+<script type="text/javascript" src="site_media/static/js/Tangle.js"></script>
+
+<!-- TangleKit (optional... just kidding) -->
+<link rel="stylesheet" href="site_media/static/css/TangleKit.css" type="text/css">
+
+<script type="text/javascript" src="site_media/static/js/mootools.js"></script>
+<script type="text/javascript" src="site_media/static/js/sprintf.js"></script>
+<script type="text/javascript" src="site_media/static/js/BVTouchable.js"></script>
+<script type="text/javascript" src="site_media/static/js/TangleKit.js"></script>
+
+<script type="text/javascript">
+    function setUpTangletangle_this() {
+    	var tangletangle_this = new Tangle($('#tangle_this')[0], {
+    		initialize: function () {
+    			this.dailycalories = 2100;
+this.calories = 150;
+this.cookies = 3;
+this.dailypercent = 100;
+    		},
+    		update: function () {
+    			
+        if(!$('.TKAdjustableNumberDown.tangledown_calories').length){
+            this.calories = this.cookies*50;
+        }
+
+        if(!$('.TKAdjustableNumberDown.tangledown_cookies').length){
+            this.cookies = this.calories/50;
+        }
+
+        if(!$('.TKAdjustableNumberDown.tangledown_dailypercent').length){
+            this.dailypercent = Math.floor(100*this.calories/this.dailycalories);
+        }
+    		}
+    	});
+    }
+    
+    $(function(){
+        setUpTangletangle_this();
+    })
+</script>
+
+        
+    </head>
+    <body class="home" id="">
+        
+        
+            <div class="topbar">
+                <div class="fill">
+                    <div class="container">
+                        
+                            <h3><a href="index.html">tangledown.org</a></h3>
+                            
+                            
+                        
+                    </div>
+                </div>
+            </div>
+        
+        
+        
+    <div class="container">
+        
+
+        <div class="hero-unit">
+        
+    <h1>Get Ready to TangleDown</h1>
+        <p>
+            <strong>tangledown</strong> combines the simplicity of <a href="http://daringfireball.net/projects/markdown">Markdown</a> <a href="http://daringfireball.net/projects/markdown/syntax">syntax</a> with
+the sexiness of <a href="http://worrydream.com/Tangle">Tangle.js</a> reactive documents <strike>and the power of  
+
+<a href="http://sympy.org/">SymPy</a> symbolic <a href="http://docs.sympy.org/0.7.1/modules/solvers/solvers.html">solvers</a></strike>.
+    </p>
+    
+    <div class="row">
+        <div class="span7">
+            <h3>You type</h3>
+                <pre>If you eat [tk:TKAdjustableNumber cookies][#cookies], you consume [tk:TKAdjustableNumber calories][#calories]. This constitutes [tk:TKAdjustableNumber %][#dailypercent] of a daily intake of [tk:TKAdjustableNumber calories][#dailycalories].
+
+[#dailycalories]: #dailycalories:init=2100
+[#dailypercent]: #dailypercent:init=100:constraint=Math.floor(100*#calories/#dailycalories)
+[#cookies]: #cookies:init=3:constraint=#calories/50
+[#calories]: #calories:init=150:constraint=#cookies*50</pre>
+        </div>
+        <div class="span7">
+            <h3>You get</h3>
+                <div id="tangle_this" class="alert-message block-message info">
+                <p>If you eat <a href="#cookies:init=3:constraint=#calories/50">tk:TKAdjustableNumber cookies</a>, you consume <a href="#calories:init=150:constraint=#cookies*50">tk:TKAdjustableNumber calories</a>. This constitutes <a href="#dailypercent:init=100:constraint=Math.floor(100*#calories/#dailycalories)">tk:TKAdjustableNumber %</a> of a daily intake of <a href="#dailycalories:init=2100">tk:TKAdjustableNumber calories</a>.</p>
+                </div>
+            <h3>Want more?</h3>
+            <p>There is more goodness coming, but right now it's pretty much a prototype. Stay tuned!</p>
+            <p><a class="btn primary large" href="https://github.com/bollwyvl/tangledown">Get the code</a></p>
+        </div>
+    </div>
+
+        </div>
+        
+        <div class="row">
+            <div class="span4">
+            
+<h2>What can it do?</h2>
+<ul>
+    <li>Capture your thoughts in a <s>concise, beautiful</s> less-painful way</li>
+    <li>Replace brittle Excel documents</li>
+    <li>Change the world</li>
+</ul>
+
+            </div>
+            <div class="span4">
+            
+<h2>How do I try it?</h2>
+<ul>
+    <li>Download it from <a href="https://github.com/bollwyvl/tangledown">GitHub</a></li>
+</ul>
+
+            </div>
+            <div class="span4">
+            
+<h2>Who's to blame?</h2>
+<ul>
+    <li><a href="https://github.com/bollwyvl">me</a>, for hacking it together,</a></li>
+    <li><a href="http://daringfireball.net/">John Gruber</a> for making text awesome,</li>
+    <li><a href="http://worrydream.com/">Bret Victor</a> for bringing text to life,</li>
+    <li>The SymPy <a href="http://docs.sympy.org/0.7.1/aboutus.html#sympy-development-team">Development Team</a> for making hard things easy,</li>
+    <li>the Django <a href="http://docs.djangoproject.com/en/1.3/internals/committers/">Committers</a> and pinax for doing the web right,</li>
+    <li>and many others!</li>
+</ul>
+
+            </div>
+            <div class="span4">
+            
+<h2>What's next?</h2>
+<ul>
+    <li>Stand up a demo site on AppEngine</li>
+    <li>Integrate SymPy</li>
+    <li>Support and extend the TangleKit controls</li>
+</ul>
+
+            </div>
+        </div>
+    </div>
+
+        
+        
+            <div id="footer">
+                <div class="inner">
+                    <div class="container">
+                        
+    
+<a href="http://github.com/bollwyvl/tangledown"><img style="position: absolute; top: 35px; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/30f550e0d38ceb6ef5b81500c64d970b7fb0f028/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub"></a>
+    
+<div class="legal">
+    &copy; 2011 tangledown.org
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+        
+        
+            
+        
+    </body>
+
+<!-- Mirrored from localhost:8000/ by HTTrack Website Copier/3.x [XR&CO'2010], Fri, 02 Dec 2011 22:51:29 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8"><!-- /Added by HTTrack -->
+</html>
