@@ -1,10 +1,12 @@
 # TangleDown
-__tangledown__ is a proof-of-concept web application that combines the 
+__TangleDown__ is a proof-of-concept web application that combines the 
 simplicity of [Markdown][md] [syntax][syntax] with the sexiness of
 [Tangle.js][tj] reactive documents <strike>and the power of the 
 [SymPy][sp] symbolic [solvers][slv]</strike>.
 
-tangledown is made available under the [MIT License][mit].
+Check out the [static demo][demo].
+
+TangleDown is made available under the [MIT License][mit].
 
 [md]: http://daringfireball.net/projects/markdown
 [syntax]: http://daringfireball.net/projects/markdown/syntax
@@ -12,14 +14,16 @@ tangledown is made available under the [MIT License][mit].
 [sp]: http://sympy.org
 [slv]: http://docs.sympy.org/0.7.1/modules/solvers/solvers.html
 [mit]: http://www.opensource.org/licenses/mit-license.php
+[demo]: http://bollwyvl.github.com/TangleDown/
 
-## what do i do with it?
+
+## what does it do?
 - Capture your thoughts in a concise, beautiful way
 - Replace brittle Excel documents
 - Change the world
 
 
-## thanks...
+## who's to blame?
 - [John Gruber][jg] for making text awesome,
 - [Bret Victor][bv] for bringing text to life,
 - The SymPy [Development Team][sdt] for making hard things easy,
