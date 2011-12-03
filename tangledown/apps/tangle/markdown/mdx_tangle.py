@@ -10,7 +10,7 @@ Examples:
 >>> import markdown
 >>> md = markdown.Markdown(extensions=['tangle'])
 
-Good ol' adjustable number
+## Good ol' adjustable number
 
 >>> md.convert("t[number](cookies)")
 u'<p><span class="TKAdjustableNumber" data-var="cookies"></span></p>'
@@ -22,7 +22,7 @@ u'<p><span class="TKAdjustableNumber" data-format="percent" data-max="100" data-
 u'<p><span class="TKAdjustableNumber" data-format="percent" data-max="100" data-min="0" data-step="5" data-var="percentCompliance">%</span></p>'
 
 
-Plain ol' number field
+## Plain ol' number field
 
 >>> md.convert('t[field](cookies " cookies")')
 u'<p><span class="TKNumberField" data-var="cookies"> cookies</span></p>'
@@ -33,7 +33,7 @@ u'<p><span class="TKNumberField" data-size="5" data-var="cookies"> cookies</span
 >>> md.convert('t[field]( cookies )')
 u'<p><span class="TKNumberField" data-var="cookies"></span></p>'
 
-The toggle
+## The toggle
 
 >>> md.convert('t[toggle](newAdmissionAppliesToEveryone)[those who paid the charge][everyone]')
 u'<p><span class="TKToggle" data-var="newAdmissionAppliesToEveryone"><span>those who paid the charge</span><span>everyone</span></span></p>'
@@ -41,7 +41,44 @@ u'<p><span class="TKToggle" data-var="newAdmissionAppliesToEveryone"><span>those
 >>> md.convert('t[toggle]( newAdmissionAppliesToEveryone )[ those who paid the charge ][ everyone ]')
 u'<p><span class="TKToggle" data-var="newAdmissionAppliesToEveryone"><span>those who paid the charge</span><span>everyone</span></span></p>'
 
+## Oy. The empty case. Just shows a number
+
+>>> md.convert('__t[](calories " calories")__')
+u'<p><strong><span data-var="calories"> calories</span></strong></p>'
+
+>>> md.convert('t[](restorationTime)')
+u'<p><span data-var="restorationTime"></span></p>'
+
+>>> md.convert('t[](surplus e6)')
+u'<p><span data-format="e6" data-var="surplus"></span></p>'
+
+
+## The Positive(or 0)/Negative switch
+
+>>> md.convert('t[posneg](deltaBudget)[collect an extra][lose]')
+u'<p><span class="TKSwitchPositiveNegative" data-var="deltaBudget"><span>collect an extra</span><span>lose</span></span></p>'
+
+## The evil huge switch. Probably need to support this format for others.
+
+>>> md.convert('''t[switch](scenarioIndex)
+... |   This is not sufficient to maintain the parks, and t[](closedParkCount) 
+...     parks would be shut down at least part-time.
+...     
+... |   This is sufficient to maintain the parks in their current state, but 
+...     not fund a program to bring safety and cleanliness up to acceptable 
+...     standards.
+...     
+... |   This is sufficient to maintain the parks in their current state, plus 
+...     fund a program to bring safety and cleanliness up to acceptable standards 
+...     over the next t[](restorationTime) years.
+...     
+... |   This is sufficient to maintain the parks and bring safety and cleanliness
+...     up to acceptable standards, leaving a $t[](surplus e6) million per year 
+...     surplus''')
+u'<span class="TKSwitch" data-var="scenarioIndex"><span class="TKSwitchOption">This is not sufficient to maintain the parks, and <span data-var="closedParkCount"></span> \\nparks would be shut down at least part-time.</span><span class="TKSwitchOption">This is sufficient to maintain the parks in their current state, but \\nnot fund a program to bring safety and cleanliness up to acceptable \\nstandards.</span><span class="TKSwitchOption">This is sufficient to maintain the parks in their current state, plus \\nfund a program to bring safety and cleanliness up to acceptable standards \\nover the next <span data-var="restorationTime"></span> years.</span><span class="TKSwitchOption">This is sufficient to maintain the parks and bring safety and cleanliness\\nup to acceptable standards, leaving a $<span data-format="e6" data-var="surplus"></span> million per year \\nsurplus</span></span>'
 """
+
+
 import re
 
 import markdown
@@ -67,7 +104,14 @@ class TangleExtension(markdown.Extension):
     def extendMarkdown(self, md, md_globals):
         for cls in self.tangle_inline_classes:
             md.inlinePatterns.add(cls.__name__, cls(cls.find_pattern, md), "<reference")
-
+            
+        """ Add an instance of DefListProcessor to BlockParser. """
+        md.parser.blockprocessors.add('tkswitchindent',
+                                      TKSwitchIndentProcessor(md.parser),
+                                      '>indent')
+        md.parser.blockprocessors.add('tkswitchlist', 
+                                      TKSwitchProcessor(md.parser),
+                                      '>ulist')
 
 def tk_span(cls, text=None, ignore=[], children=[], **kwargs):
     """
@@ -78,9 +122,115 @@ def tk_span(cls, text=None, ignore=[], children=[], **kwargs):
     [obj.append(c) for c in children]
     if text:
         obj.text = text
-    obj.set('class', cls.__class__.__name__)
+    if cls:
+        obj.set('class', cls.__class__.__name__)
     [obj.set(k, v) for k, v in kwargs.items()]
     return obj
+
+class TKSwitchProcessor(markdown.blockprocessors.BlockProcessor):
+    """
+    Process Definition Lists.
+    
+    Shamelessly plundered from markdown.extensions.deflist... should work together, though.
+    
+    TODO: Nesting?
+    """
+
+    RE = re.compile(r'(^|\n)[ ]{0,3}\|[ ]{1,3}(.*?)(\n|$)')
+    NO_INDENT_RE = re.compile(r'^[ ]{0,3}[^ \|]')
+
+    def test(self, parent, block):
+        return bool(self.RE.search(block))
+
+    def run(self, parent, blocks):
+        block = blocks.pop(0)
+        m = self.RE.search(block)
+        terms = [l.strip() for l in block[:m.start()].split('\n') if l.strip()]
+        block = block[m.end():]
+        no_indent = self.NO_INDENT_RE.match(block)
+        if no_indent:
+            d, theRest = (block, None)
+        else:
+            d, theRest = self.detab(block)
+        if d:
+            d = '%s\n%s' % (m.group(2), d)
+        else:
+            d = m.group(2)
+        sibling = self.lastChild(parent)
+        if not terms and sibling.tag == 'p':
+            # The previous paragraph contains the terms
+            state = 'looselist'
+            terms = sibling.text.split('\n')
+            parent.remove(sibling)
+            # Aquire new sibling
+            sibling = self.lastChild(parent)
+        else:
+            state = 'list'
+
+        if sibling and sibling.get('class') == 'TKSwitch':
+            # This is another item on an existing list
+            dl = sibling
+            if len(dl) and dl[-1].get('class') == 'TKSwitchOption' and len(dl[-1]):
+                state = 'looselist'
+        else:
+            # This is a new list
+            dl = markdown.util.etree.SubElement(parent, 'span')
+            dl.set("class", 'TKSwitch') 
+        # Add terms
+        for term in terms:
+            term_match = re.match(r't\[switch\]\((?P<var>[^\)]*)\)', term).groupdict()
+            dl.set('data-var', term_match['var'])
+        # Add definition
+        self.parser.state.set(state)
+        dd = markdown.util.etree.SubElement(dl, 'span')
+        dd.set('class', 'TKSwitchOption')
+        self.parser.parseBlocks(dd, [d])
+        self.parser.state.reset()
+
+        if theRest:
+            blocks.insert(0, theRest)
+
+class TKSwitchIndentProcessor(markdown.blockprocessors.ListIndentProcessor):
+    """
+    Process indented children of Tangle switch items.
+    
+    Shamelessly plundered from markdown.extensions.deflist... should work together, though
+    """
+
+    ITEM_TYPES = ['dd']
+    LIST_TYPES = ['dl']
+
+    def create_item(self, parent, block):
+        """ Create a new dd and parse the block with it as the parent. """
+        dd = markdown.util.etree.SubElement(parent, 'dd')
+        self.parser.parseBlocks(dd, [block])
+    
+
+class TKVoid(markdown.inlinepatterns.Pattern):
+    find_pattern = r't\[\]\((?P<stuff>[^\)]*)\)'
+    stuff_pattern = re.compile(r'''
+        \s*
+        (?P<var>[^\. ]*)          #required variable
+        \s*                       #maybe some space
+        (?P<format>[^\"\'\s]*)    #optional sprintf format
+        \s*                       #maybe some spaces
+        ((?P<qt>[\"\'])
+        (?P<label>[^\4]*)        #optional quoted label
+        \4|$)
+        \s*                    
+        ''', re.X)
+    
+    def handleMatch(self, m):
+        bits = self.stuff_pattern.match(m.groupdict()['stuff'])
+        kwargs = {}
+        text = ""
+        if bits:
+            bits = bits.groupdict()
+            text = bits['label']
+            kwargs = bits
+        return tk_span(None, text, ignore=['qt','label'], **kwargs)
+        
+TangleExtension.tangle_inline_classes.append(TKVoid)
 
 
 class TKToggle(markdown.inlinepatterns.Pattern):
@@ -99,6 +249,12 @@ class TKToggle(markdown.inlinepatterns.Pattern):
         return tk_span(self, children=children, ignore=['op0', 'op1'], **kwargs)
         
 TangleExtension.tangle_inline_classes.append(TKToggle)
+
+
+class TKSwitchPositiveNegative(TKToggle):
+    find_pattern = r't\[posneg\]\(\s*(?P<var>[^\)\s]*)\s*\)\[\s*(?P<op0>[^\]]*[^\s])\s*\]\[\s*(?P<op1>[^\]]*[^\s])\s*\]'
+
+TangleExtension.tangle_inline_classes.append(TKSwitchPositiveNegative)
 
 
 class TKNumberField(markdown.inlinepatterns.Pattern):
