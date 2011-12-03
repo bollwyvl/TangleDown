@@ -38,7 +38,7 @@ The toggle
 >>> md.convert('t[toggle](newAdmissionAppliesToEveryone)[those who paid the charge][everyone]')
 u'<p><span class="TKToggle" data-var="newAdmissionAppliesToEveryone"><span>those who paid the charge</span><span>everyone</span></span></p>'
 
->>> md.convert('t[ toggle ]( newAdmissionAppliesToEveryone )[ those who paid the charge ][ everyone ]')
+>>> md.convert('t[toggle]( newAdmissionAppliesToEveryone )[ those who paid the charge ][ everyone ]')
 u'<p><span class="TKToggle" data-var="newAdmissionAppliesToEveryone"><span>those who paid the charge</span><span>everyone</span></span></p>'
 
 """
@@ -84,7 +84,7 @@ def tk_span(cls, text=None, ignore=[], children=[], **kwargs):
 
 
 class TKToggle(markdown.inlinepatterns.Pattern):
-    find_pattern = r't\[toggle\]\(\s(?P<var>[^\)]*)\s\)\[\s*(?P<op0>[^\]]*)\s*\]\[\s*(?P<op1>[^\]]*)\s*\]'
+    find_pattern = r't\[toggle\]\(\s*(?P<var>[^\)\s]*)\s*\)\[\s*(?P<op0>[^\]]*[^\s])\s*\]\[\s*(?P<op1>[^\]]*[^\s])\s*\]'
     
     def handleMatch(self, m):
         kwargs = {}
