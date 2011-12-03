@@ -75,7 +75,27 @@ u'<p><span class="TKSwitchPositiveNegative" data-var="deltaBudget"><span>collect
 ... |   This is sufficient to maintain the parks and bring safety and cleanliness
 ...     up to acceptable standards, leaving a $t[](surplus e6) million per year 
 ...     surplus''')
-u'<span class="TKSwitch" data-var="scenarioIndex"><span class="TKSwitchOption">This is not sufficient to maintain the parks, and <span data-var="closedParkCount"></span> \\nparks would be shut down at least part-time.</span><span class="TKSwitchOption">This is sufficient to maintain the parks in their current state, but \\nnot fund a program to bring safety and cleanliness up to acceptable \\nstandards.</span><span class="TKSwitchOption">This is sufficient to maintain the parks in their current state, plus \\nfund a program to bring safety and cleanliness up to acceptable standards \\nover the next <span data-var="restorationTime"></span> years.</span><span class="TKSwitchOption">This is sufficient to maintain the parks and bring safety and cleanliness\\nup to acceptable standards, leaving a $<span data-format="e6" data-var="surplus"></span> million per year \\nsurplus</span></span>'
+u'<span class="TKSwitch" data-var="scenarioIndex"><span class="TKBranchOption">This is not sufficient to maintain the parks, and <span data-var="closedParkCount"></span> \\nparks would be shut down at least part-time.</span><span class="TKBranchOption">This is sufficient to maintain the parks in their current state, but \\nnot fund a program to bring safety and cleanliness up to acceptable \\nstandards.</span><span class="TKBranchOption">This is sufficient to maintain the parks in their current state, plus \\nfund a program to bring safety and cleanliness up to acceptable standards \\nover the next <span data-var="restorationTime"></span> years.</span><span class="TKBranchOption">This is sufficient to maintain the parks and bring safety and cleanliness\\nup to acceptable standards, leaving a $<span data-format="e6" data-var="surplus"></span> million per year \\nsurplus</span></span>'
+
+
+>>> md.convert('''t[if](scenarioIndex)
+... ~   This is not sufficient to maintain the parks, and t[](closedParkCount) 
+...     parks would be shut down at least part-time.''')
+u'<span class="TKIf" data-var="scenarioIndex"><span class="TKBranchOption">This is not sufficient to maintain the parks, and <span data-var="closedParkCount"></span> \\nparks would be shut down at least part-time.</span></span>'
+
+>>> md.convert('''t[if]( scenarioIndex invert )
+... ~   This is not sufficient to maintain the parks, and t[](closedParkCount) 
+...     parks would be shut down at least part-time.''')
+u'<span class="TKIf" data-invert="true" data-var="scenarioIndex"><span class="TKBranchOption">This is not sufficient to maintain the parks, and <span data-var="closedParkCount"></span> \\nparks would be shut down at least part-time.</span></span>'
+
+>>> md.convert('''t[if]( scenarioIndex invert )
+... ~   This is not sufficient to maintain the parks, and t[](closedParkCount) 
+...     parks would be shut down at least part-time.
+...
+... t[switch](scenarioIndex)
+... |    Foo
+... |    Bar''')
+u'<span class="TKIf" data-invert="true" data-var="scenarioIndex"><span class="TKBranchOption">This is not sufficient to maintain the parks, and <span data-var="closedParkCount"></span> \\nparks would be shut down at least part-time.</span></span><span class="TKSwitch" data-var="scenarioIndex"><span class="TKBranchOption">Foo</span><span class="TKBranchOption">Bar</span></span>'
 """
 
 
@@ -106,11 +126,11 @@ class TangleExtension(markdown.Extension):
             md.inlinePatterns.add(cls.__name__, cls(cls.find_pattern, md), "<reference")
             
         """ Add an instance of DefListProcessor to BlockParser. """
-        md.parser.blockprocessors.add('tkswitchindent',
-                                      TKSwitchIndentProcessor(md.parser),
-                                      '>indent')
         md.parser.blockprocessors.add('tkswitchlist', 
                                       TKSwitchProcessor(md.parser),
+                                      '>ulist')
+        md.parser.blockprocessors.add('tkif', 
+                                      TKIfProcessor(md.parser),
                                       '>ulist')
 
 def tk_span(cls, text=None, ignore=[], children=[], **kwargs):
@@ -127,7 +147,7 @@ def tk_span(cls, text=None, ignore=[], children=[], **kwargs):
     [obj.set(k, v) for k, v in kwargs.items()]
     return obj
 
-class TKSwitchProcessor(markdown.blockprocessors.BlockProcessor):
+class TKBranchingProcessor(markdown.blockprocessors.BlockProcessor):
     """
     Process Definition Lists.
     
@@ -167,44 +187,47 @@ class TKSwitchProcessor(markdown.blockprocessors.BlockProcessor):
         else:
             state = 'list'
 
-        if sibling and sibling.get('class') == 'TKSwitch':
+        if sibling and sibling.get('class') == self.tree_class:
             # This is another item on an existing list
             dl = sibling
-            if len(dl) and dl[-1].get('class') == 'TKSwitchOption' and len(dl[-1]):
+            if len(dl) and dl[-1].get('class') == 'TKBranchOption' and len(dl[-1]):
                 state = 'looselist'
         else:
             # This is a new list
             dl = markdown.util.etree.SubElement(parent, 'span')
-            dl.set("class", 'TKSwitch') 
+            dl.set("class", self.tree_class)
         # Add terms
         for term in terms:
-            term_match = re.match(r't\[switch\]\((?P<var>[^\)]*)\)', term).groupdict()
-            dl.set('data-var', term_match['var'])
+            self.term_handler(dl, term)
         # Add definition
         self.parser.state.set(state)
         dd = markdown.util.etree.SubElement(dl, 'span')
-        dd.set('class', 'TKSwitchOption')
+        dd.set('class', 'TKBranchOption')
         self.parser.parseBlocks(dd, [d])
         self.parser.state.reset()
 
         if theRest:
             blocks.insert(0, theRest)
-
-class TKSwitchIndentProcessor(markdown.blockprocessors.ListIndentProcessor):
-    """
-    Process indented children of Tangle switch items.
     
-    Shamelessly plundered from markdown.extensions.deflist... should work together, though
-    """
-
-    ITEM_TYPES = ['dd']
-    LIST_TYPES = ['dl']
-
-    def create_item(self, parent, block):
-        """ Create a new dd and parse the block with it as the parent. """
-        dd = markdown.util.etree.SubElement(parent, 'dd')
-        self.parser.parseBlocks(dd, [block])
+class TKSwitchProcessor(TKBranchingProcessor):
+    tree_class = 'TKSwitch'
+    RE = re.compile(r'(^|\n)[ ]{0,3}\|[ ]{1,3}(.*?)(\n|$)')
     
+    def term_handler(self, tree, term):
+        term_match = re.match(r't\[switch\]\(\s*(?P<var>[^\)\s]*)\s*\)', term).groupdict()
+        tree.set('data-var', term_match['var'])
+
+class TKIfProcessor(TKBranchingProcessor):
+    tree_class = 'TKIf'
+    RE = re.compile(r'(^|\n)[ ]{0,3}\~[ ]{1,3}(.*?)(\n|$)')
+    
+    def term_handler(self, tree, term):
+        term_match = re.match(r't\[if\]\(\s*(?P<var>[^\) ]*)\s*(?P<invert>invert)?\s*\)', term)
+        if term_match:
+            tree.set('data-var', term_match.groupdict()['var'])
+            if term_match.groupdict()['invert']:
+                tree.set('data-invert', 'true')
+
 
 class TKVoid(markdown.inlinepatterns.Pattern):
     find_pattern = r't\[\]\((?P<stuff>[^\)]*)\)'
