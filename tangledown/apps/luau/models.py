@@ -1,5 +1,6 @@
 from django.db import models
 import re
+import markdown
 
 VARS_PAT = re.compile(r'^\[.*\]: #(?P<var>[^:]*)(?P<rest>.*)', re.MULTILINE)
 REST_PAT = re.compile(r'(?P<mod>[^:]*)=(?P<val>[^:]*)')
@@ -17,50 +18,26 @@ class WikiPage(models.Model):
     def __unicode__(self):
         return u"%s" % self.name
         
+    def get_code_lines(self, stage):
+        for cb in self.tangled_body.findall('*/code'):
+            if stage in cb.get('class'):
+                for var_init in cb.text.split('\n'):
+                    var_init = var_init.strip()
+                    if var_init.startswith('#'):
+                        yield var_init.replace('#','this.').replace(':','=')+";"
     
     def tangle_initialize(self):
-        result = []
-        
-        for var, mods in self.tangled_body.items():
-            if 'init' in mods:
-                result.append('this.%s = %s;' % (
-                    var, mods['init'][0].replace('#','this.')
-                    ))
-        return "\n".join(result)
+        return "\n".join(self.get_code_lines('initialize'))
 
     def tangle_update(self):
-        # TODO: BOO! work with any TK control
-        templ = """
-        if(!$('.TKAdjustableNumberDown.tangledown_%(var)s').length){
-            this.%(var)s = %(constraint)s;
-        }"""
-        result = []
-        for var, mods in self.tangled_body.items():
-            for constraint in mods.get('constraint', []):
-                result.append(templ % dict(
-                    var=var, 
-                    constraint=constraint.replace('#','this.')
-                    ))
-        
-        return "\n".join(result)
+        return "\n".join(self.get_code_lines('update'))
         
     @property
     def tangled_body(self):
-        """
-        returns a parsed version of all found variables:
-        {
-            'cookies': {
-                'init': [0],
-                'constraint': [
-                    '#calories/50',
-                ],
-            }
-        }
         
-        """
-        result = {}
-        for var in [m.groupdict() for m in VARS_PAT.finditer(self.body)]:
-            result[var['var'].strip()] = {}
-            for mod in [m.groupdict() for m in REST_PAT.finditer(var['rest'])]:
-                result[var['var']].setdefault(mod['mod'],[]).append(mod['val'].strip())
-        return result
+        if not hasattr(self,"_tangled_body"):
+            md = markdown.Markdown(extensions=['tangle', 'fenced_code'])
+            html = md.convert(self.body)
+            self._tangled_body = markdown.util.etree.XML('<body>%s</body>' % html)
+            
+        return self._tangled_body

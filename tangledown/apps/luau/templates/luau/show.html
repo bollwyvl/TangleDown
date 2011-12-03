@@ -11,7 +11,7 @@
 <div id="tangle_body">
 <h1>{{page.title}} <span class="label"><a href="edit">Edit</a></span></h1>
 <p>
-    {{page.body|markdown}}
+    {% tangledown page.body %}
 </p>
 </div>
 {% endblock body %}

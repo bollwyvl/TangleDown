@@ -8,7 +8,7 @@ All resulting HTML is XHTML Strict compatible.
 Examples:
 
 >>> import markdown
->>> md = markdown.Markdown(extensions=['tangle'])
+>>> md = markdown.Markdown(extensions=['tangle', 'fenced_code'])
 
 ## Good ol' adjustable number
 
@@ -96,7 +96,26 @@ u'<span class="TKIf" data-invert="true" data-var="scenarioIndex"><span class="TK
 ... |    Foo
 ... |    Bar''')
 u'<span class="TKIf" data-invert="true" data-var="scenarioIndex"><span class="TKBranchOption">This is not sufficient to maintain the parks, and <span data-var="closedParkCount"></span> \\nparks would be shut down at least part-time.</span></span><span class="TKSwitch" data-var="scenarioIndex"><span class="TKBranchOption">Foo</span><span class="TKBranchOption">Bar</span></span>'
+
+
+>>> md.convert('''If you eat t[number](cookies ' cookies'), you consume t[](calories ' calories'). 
+... This constitutes t[](dailypercent  '%') of a daily intake of t[number](dailycalories 'calories').
+...
+... ~~~~.initialize
+... #cookies = 3
+... #calories = 150
+... #dailypercent = 1
+... #dailycalories = 2100
+... ~~~~
+...
+... ~~~~.update
+... #calories = #cookies * 50
+... #dailypercent  = (#cookies * 50) / #dailycalories
+... ~~~~''')
+u'foo'
+
 """
+
 
 
 import re
@@ -312,7 +331,7 @@ class TKAdjustableNumber(markdown.inlinepatterns.Pattern):
     stuff_pattern = re.compile(r'''
         \s*
         ((?P<min>[\d\-.]*)<|)     #optional minimum
-        (?P<var>[^\.]*)           #required variable
+        (?P<var>[^\. ]*)          #required variable
         (\.\.(?P<step>[\d\-.]*)|) #optional step
         (<(?P<max>[\d\-.]*)|)     #optional maximum
         \s*                       #maybe some space

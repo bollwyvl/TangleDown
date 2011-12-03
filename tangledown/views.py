@@ -7,9 +7,12 @@ from util.shortcuts import context_response
 
 from luau.models import WikiPage
 
+from tangle.markdown import mdx_tangle
+
 def home(request):
-    ctxt = {}
+    ctxt = {
+        'sample': WikiPage.objects.order_by('?')[0],
+    }
     
-    ctxt['sample'] = WikiPage.objects.order_by('?')[0]
     
     return context_response(request, 'homepage.html', ctxt)
