@@ -6,7 +6,7 @@
 {% block extra_head %}
 {{ super }}
 {% tangle_imports %}
-{% tangle_instance sample "tangle_this" %}
+{% tangle_instance sample.body "tangle_this" %}
 {% endblock %}
 
 {% block head_title %}{% trans "Welcome" %}{% endblock %}

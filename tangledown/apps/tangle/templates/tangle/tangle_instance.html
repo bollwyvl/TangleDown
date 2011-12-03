@@ -1,16 +1,16 @@
 <script type="text/javascript">
-    function setUpTangle{{root}}() {
-    	var tangle{{root}} = new Tangle($('#{{root}}')[0], {
+    function setUpTangle_{{root}}() {
+    	var tangle_{{root}} = new Tangle($('#{{root}}')[0], {
     		initialize: function () {
-    			{{ tangleable.tangle_initialize|safe }}
+    			{{ initialize|safe }}
     		},
     		update: function () {
-    			{{ tangleable.tangle_update|safe }}
+    			{{ update|safe }}
     		}
     	});
     }
     
     $(function(){
-        setUpTangle{{root}}();
+        setUpTangle_{{root}}();
     })
 </script>

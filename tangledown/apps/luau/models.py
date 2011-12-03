@@ -17,27 +17,3 @@ class WikiPage(models.Model):
 
     def __unicode__(self):
         return u"%s" % self.name
-        
-    def get_code_lines(self, stage):
-        for cb in self.tangled_body.findall('*/code'):
-            if stage in cb.get('class'):
-                for var_init in cb.text.split('\n'):
-                    var_init = var_init.strip()
-                    if var_init.startswith('#'):
-                        yield var_init.replace('#','this.').replace(':','=')+";"
-    
-    def tangle_initialize(self):
-        return "\n".join(self.get_code_lines('initialize'))
-
-    def tangle_update(self):
-        return "\n".join(self.get_code_lines('update'))
-        
-    @property
-    def tangled_body(self):
-        
-        if not hasattr(self,"_tangled_body"):
-            md = markdown.Markdown(extensions=['tangle', 'fenced_code'])
-            html = md.convert(self.body)
-            self._tangled_body = markdown.util.etree.XML('<body>%s</body>' % html)
-            
-        return self._tangled_body

@@ -4,7 +4,7 @@
 {% block extra_head %}
 {{ super }}
 {% tangle_imports %}
-{% tangle_instance page "tangle_body" %}
+{% tangle_instance page.body "tangle_body" %}
 {% endblock extra_head %}
 
 {% block body %}
