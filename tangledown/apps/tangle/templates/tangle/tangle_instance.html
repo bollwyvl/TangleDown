@@ -2,10 +2,18 @@
     function setUpTangle_{{root}}() {
     	var tangle_{{root}} = new Tangle($('#{{root}}')[0], {
     		initialize: function () {
-    			{{ initialize|safe }}
+    			    {{ initialize|safe }}
+    		    {% if using_sympy %}
+    		        this.__constraints = {{ constraints|safe }};
+    		        tangledownload(this)
+    			{% endif %}
     		},
     		update: function () {
-    			{{ update|safe }}
+    		    {% if using_sympy %}
+    		        tangledownload(this)
+    		    {% else %}
+    			    {{ update|safe }}
+    			{% endif %}
     		}
     	});
     }
