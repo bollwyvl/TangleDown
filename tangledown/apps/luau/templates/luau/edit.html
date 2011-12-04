@@ -4,7 +4,7 @@
 
 {% block head_title %}Edit {{ form.instance.title }}{% endblock %}
 
-{% block body %}
+{% block luau_body %}
     <form method="POST" action="">
         {% csrf_token %}
         <fieldset>
@@ -15,4 +15,4 @@
             <button type="submit" class="btn primary">Submit</button>
         </div>
     </form>
-{% endblock body %}
+{% endblock luau_body %}

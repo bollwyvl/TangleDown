@@ -8,7 +8,42 @@
         }
     },
     
-    {"pk": 1, "model": "luau.wikipage", "fields": {"body": "If you eat t[number](cookies ' cookies'), you consume t[](calories ' calories'). This constitutes t[](dailypercent percent) of a daily intake of t[number](100<dailycalories..100 ' calories').\r\n\r\nt[if](overninek)\r\n~ # It's over 9000!\r\n\r\n~~~~.initialize\r\n#cookies: 3\r\n#calories: 150\r\n#dailypercent: 1\r\n#dailycalories: 2100\r\n#overninek: 0\r\n~~~~\r\n~~~~.update\r\n#calories: #cookies * 50\r\n#dailypercent: (#cookies * 50) / #dailycalories\r\n#overninek: #calories > 9000\r\n~~~~", "name": "Home", "title": "Home"}}, 
+  {
+    "pk": 1, 
+    "model": "auth.user", 
+    "fields": {
+      "username": "tangledown", 
+      "first_name": "", 
+      "last_name": "", 
+      "is_active": true, 
+      "is_superuser": true, 
+      "is_staff": true, 
+      "last_login": "2011-12-04 13:48:55", 
+      "groups": [], 
+      "user_permissions": [], 
+      "password": "sha1$a4627$977a1c03678150ffed84a61281cfce829d4cb421", 
+      "email": "tangledown@tangledown.org", 
+      "date_joined": "2011-12-04 13:46:39"
+    }
+  },
     
-    {"pk": 2, "model": "luau.wikipage", "fields": {"body": "If you eat t[number](cookies ' cookies'), you consume t[](calories ' calories'). This constitutes t[](dailypercent percent) of a daily intake of t[number](100<dailycalories..100 ' calories').\r\n~~~~.initialize\r\n#cookies: 3\r\n#dailycalories: 2100\r\n~~~~\r\n~~~~.equations\r\n#calories: #cookies * 50\r\n#calories: #dailypercent * #dailycalories\r\n~~~~", "name": "Sympy", "title": "Sympy"}}
+  {
+    "pk": 1, 
+    "model": "luau.wikipage", 
+    "fields": {
+      "body": "If you eat t[number](cookies ' cookies'), you consume t[](calories ' calories'). This constitutes t[](dailypercent percent) of a daily intake of t[number](100<dailycalories..100 ' calories').\r\n\r\nt[if](overninek)\r\n~ # It's over 9000!\r\n\r\n~~~~.initialize\r\n#cookies: 3\r\n#calories: 150\r\n#dailypercent: 1\r\n#dailycalories: 2100\r\n#overninek: 0\r\n~~~~\r\n~~~~.update\r\n#calories: #cookies * 50\r\n#dailypercent: (#cookies * 50) / #dailycalories\r\n#overninek: #calories > 9000\r\n~~~~", 
+      "name": "home", 
+      "title": "Home"
+    }
+  }, 
+  
+  {
+    "pk": 2, 
+    "model": "luau.wikipage", 
+    "fields": {
+      "body": "If you eat t[number](cookies ' cookies'), you consume t[](calories ' calories'). This constitutes t[](dailypercent percent) of a daily intake of t[number](100<dailycalories..100 ' calories').\r\n~~~~.initialize\r\n#cookies: 3\r\n#dailycalories: 2100\r\n~~~~\r\n~~~~.equations\r\n#calories: #cookies * 50\r\n#calories: #dailypercent * #dailycalories\r\n~~~~", 
+      "name": "sympy", 
+      "title": "Sympy"
+    }
+  }
 ]

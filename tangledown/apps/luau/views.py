@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render_to_response, redirect
 from django.conf import settings
 from django.template import RequestContext
+from django.template.defaultfilters import slugify
 
 from util.shortcuts import context_response
 
@@ -12,15 +13,26 @@ def show_page(request, page_slug=None):
     """
     Show a WikiPage (or redirect to LUAU_DEFAULT_SLUG)
     """
+    
     if not page_slug:
-        return redirect('luau.views.show_page', page_slug=settings.LUAU_DEFAULT_SLUG)
+        page_slug = slugify(request.GET.get('new', settings.LUAU_DEFAULT_SLUG))
+        title = request.GET.get('title', request.GET.get('new', settings.LUAU_DEFAULT_SLUG))
+        try:
+            page = WikiPage.objects.get(name=page_slug)
+            return redirect('/wiki/%s' % (page_slug))
+        except WikiPage.DoesNotExist:
+            return redirect('/wiki/%s?title=%s' % (page_slug, title))
         
     try:
         page = WikiPage.objects.get(name=page_slug)
     except WikiPage.DoesNotExist:
-        return redirect('luau.views.edit_page', page_slug=page_slug)
+        title = request.GET.get('title', page_slug)
+        return redirect('/wiki/%s/edit?title=%s' % (page_slug, title))
     
-    ctxt = dict(page=page) 
+    ctxt = dict(
+        page=page,
+        pages=WikiPage.objects.all(),
+    )
          
     return context_response(request, 'luau/show.html', ctxt)
 
@@ -31,7 +43,7 @@ def edit_page(request, page_slug=None):
     try:
         page = WikiPage.objects.get(name=page_slug)
     except WikiPage.DoesNotExist:
-        page = WikiPage(title=page_slug, name=page_slug)
+        page = WikiPage(name=page_slug, title=request.GET.get('title', page_slug))
     
     if request.POST.get('action', None) == 'edit':
         form = WikiPageForm(request.POST, instance=page)
@@ -44,6 +56,7 @@ def edit_page(request, page_slug=None):
     ctxt = dict(
         form=WikiPageForm(instance=page),
         page=page,
+        pages=WikiPage.objects.all(),
         )
     
     return context_response(request, 'luau/edit.html', ctxt)

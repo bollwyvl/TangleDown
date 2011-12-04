@@ -4,3 +4,25 @@
 {{ super }}
 <h3>{{page.title}}</h3>
 {% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="span13">
+        {% block luau_body %}{% endblock %}
+        </div>
+        <div class="span3">
+            {% block luau_nav %}
+            <h2>Navigate</h2>
+            <ul>
+                {% for other_page in pages %}
+                <li><a href="/wiki/{{other_page.name}}">{{other_page.title}}</a></li>
+                {% endfor %}
+            </ul>
+            <form method="get" action="/wiki">
+                <input class="span2" type="text" name="new" placeholder="New Page"/>
+                <button class="btn">GO</button>
+            </form>
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}

@@ -7,11 +7,11 @@
 {% tangle_instance page.body "tangle_body" %}
 {% endblock extra_head %}
 
-{% block body %}
+{% block luau_body %}
 <div id="tangle_body">
 <h1>{{page.title}} <span class="label"><a href="edit">Edit</a></span></h1>
 <p>
     {% tangledown page.body %}
 </p>
 </div>
-{% endblock body %}
+{% endblock luau_body %}
