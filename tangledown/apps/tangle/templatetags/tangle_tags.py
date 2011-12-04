@@ -13,7 +13,7 @@ from util.json_encode import json_encode
 
 register = template.Library()
 
-STRIP_CODE = re.compile(r'<pre><code class="(update|initialize)">.*?</code></pre>', re.M | re.S)
+STRIP_CODE = re.compile(r'<pre><code class="(update|initialize|equations)">.*?</code></pre>', re.M | re.S)
 
 @register.simple_tag(takes_context=True)
 def tangle_imports(context):

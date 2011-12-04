@@ -1,26 +1,45 @@
-function tangledownload(tangle){
-    var system = {
-        'constraints': tangle.__constraints,
-        'suggestions': []
-    };
-		        
-    for(var v in tangle){
-        if(v == '__constraints' || v == 'initialize' || v == 'update'){
-            continue;
-        }
-        system.suggestions.push(["#"+v, tangle[v]])
-    }
-
-
-    $.ajax({
-        url: '/tangle/' + encodeURIComponent(JSON.stringify(system)),
-        success: function(data){
-                if(data.solution){
-                    for(var v in data.solution){
-                        tangle[v] = data.solution[v]
+var TangleDown = this.TangleDown = function(){
+    return {
+        tangledownload: _.memoize(
+            // synchronous get function 
+            function(tangle){
+                var result = {},
+                    system = {
+                        'constraints': tangle.__constraints,
+                        'suggestions': []
+                    };
+	        
+                for(var k in tangle){
+                    if(!_.include(['__constraints', 'initialize', 'update'], k)){
+                        system.suggestions.push(["#"+k, tangle[k]]);
                     }
                 }
+
+
+                $.ajax({
+                    url: '/tangle/' + encodeURIComponent(JSON.stringify(system)),
+                    success: function(data){
+                            if(data.solution){
+                                result = data.solution;
+                            }
+                        },
+                    async: false
+                })
+                return result;
             },
-        async: false
-    })
-}
+            // hash function
+            function(tangle){
+                var hash = "";
+                for (var k in tangle){
+                    if(!_.include(['__constraints', 'initialize', 'update'], k)){
+                        hash += k+"="+tangle[k];
+                    }
+                }
+                return hash;
+            }
+        )
+    }
+};
+
+//make it
+TangleDown = this.TangleDown = TangleDown();

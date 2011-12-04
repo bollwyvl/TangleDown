@@ -5,12 +5,12 @@
     			    {{ initialize|safe }}
     		    {% if using_sympy %}
     		        this.__constraints = {{ constraints|safe }};
-    		        tangledownload(this)
+    		        $.extend(this, TangleDown.tangledownload(this))
     			{% endif %}
     		},
     		update: function () {
     		    {% if using_sympy %}
-    		        tangledownload(this)
+    		        $.extend(this, TangleDown.tangledownload(this))
     		    {% else %}
     			    {{ update|safe }}
     			{% endif %}
