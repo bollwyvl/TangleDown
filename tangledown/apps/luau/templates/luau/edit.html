@@ -2,7 +2,126 @@
 
 {% load bootstrap_tags %}
 
-{% block head_title %}Edit {{ form.instance.title }}{% endblock %}
+{% block extra_head %}
+    {{ super }}
+    <link rel="stylesheet" href="{{STATIC_URL}}js/codemirror/lib/codemirror.css">
+    <script src="{{STATIC_URL}}js/codemirror/lib/codemirror.js"></script>
+    <script src="{{STATIC_URL}}js/codemirror/mode/xml/xml.js"></script>
+    <script src="{{STATIC_URL}}js/codemirror/mode/markdown/markdown.js"></script>
+    <link rel="stylesheet" href="{{STATIC_URL}}js/codemirror/theme/default.css">
+    <link rel="stylesheet" href="{{STATIC_URL}}js/codemirror/mode/markdown/markdown.css">
+    
+    <style type="text/css">
+        .CodeMirror {
+                overflow-y: hidden;
+                overflow-x: auto;
+                width: 100%;
+                height: auto;
+        }
+        .CodeMirror-scroll{
+                background-color:#fff;
+                -moz-transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) inset;
+        }
+        .fullscreen {
+            display: block;
+            position: absolute;
+            top: 40px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 99999;
+            margin: 0;
+            padding: 0;
+            border: 0px solid #BBBBBB;
+            opacity: 1;
+        }
+        .fullscreenBar{
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            z-index: 99999;
+            margin: 0;
+            padding: 0;
+            border: 0px solid #BBBBBB;
+            opacity: 1;
+            color:#999;
+        }
+        form .row_id_body label{
+            float:none;
+            display:block;
+            width: 100%;
+            text-align:left;
+            text-indent:100px;
+        }
+        form .input_id_body{
+            margin-left:0;
+        }
+    </style>
+    
+    
+    <script type="text/javascript">
+    $(function(){
+        
+        var editor = CodeMirror.fromTextArea($("#id_body")[0], {
+            mode: 'markdown',
+            matchBrackets: true,
+            width:'700px',
+            lineWrapping: true,
+            extraKeys: {"F11": toggleFullscreenEditing, "Esc": toggleFullscreenEditing}
+        });
+
+        function toggleFullscreenEditing(){
+            var editorDiv = $('.CodeMirror-scroll'),
+                bodyBar = $('label[for="id_body"]'),
+                toggleFS = $('#toggle_fs');
+            if (!editorDiv.hasClass('fullscreen')) {
+                toggleFullscreenEditing.beforeFullscreen = { height: editorDiv.height(), width: editorDiv.width() }
+                editorDiv.addClass('fullscreen')
+                    .height($(window).height() - 40)
+                    .width('100%');
+                bodyBar.addClass('fullscreenBar')
+                    .addClass('topbar-inner');
+                toggleFS.addClass('danger');
+                editor.refresh();
+            }
+            else {
+                editorDiv.removeClass('fullscreen')
+                    .height(toggleFullscreenEditing.beforeFullscreen.height)
+                    .width(toggleFullscreenEditing.beforeFullscreen.width)
+                bodyBar.removeClass('fullscreenBar')
+                    .removeClass('topbar-inner');
+                toggleFS.removeClass('danger');
+                editor.refresh();
+            }
+        }
+        
+        $('label[for="id_body"]').append($('<button/>',{
+            "text": "Fullscreen",
+            "id": "toggle_fs",
+            "class": "btn small",
+            "click": function(evt){
+                evt.preventDefault();
+                toggleFullscreenEditing();
+            }
+        }), $('<button/>',{
+            "text": "Markdown Help",
+            "class": "btn small info disabled",
+            "click": function(evt){
+                
+                evt.preventDefault();
+            }
+        }))
+    })
+    </script>
+{% endblock extra_head %}
+
+{% block head_title %}
+    Edit {{ form.instance.title }}
+{% endblock %}
 
 {% block luau_body %}
     <form method="POST" action="">

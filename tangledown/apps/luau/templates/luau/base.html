@@ -1,9 +1,8 @@
 {% extends "site_base.html" %}
 
-{% block nav %}
-{{ super }}
-<h3>{{page.title}}</h3>
-{% endblock %}
+{% block head_title %}
+    {{page.title}}
+{% endblock head_title %}
 
 {% block body %}
     <div class="row">

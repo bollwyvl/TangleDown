@@ -52,7 +52,7 @@ def using_sympy(tangleable):
 
 def get_code_lines(tangleable, stage):
     for cb in tangle_tree(tangleable).findall('*/code'):
-        if stage in cb.get('class'):
+        if stage in cb.get('class', ''):
             for line in cb.text.split('\n'):
                 line.strip()
                 if line:
