@@ -8,7 +8,7 @@ All resulting HTML is XHTML Strict compatible.
 Examples:
 
 >>> import markdown
->>> md = markdown.Markdown(extensions=['tangle', 'fenced_code'])
+>>> md = markdown.Markdown(extensions=['tangle', 'fenced_code', 'def_list])
 
 ## Good ol' adjustable number
 

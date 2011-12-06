@@ -1,6 +1,11 @@
 /* Based on Sublime Text's Monokai theme */
 
-.cm-s-monokai { background: #272822; color: #F8F8F2; }
+.cm-s-monokai { color: #F8F8F2; 
+    background-color: #222222;
+    background-image: -moz-linear-gradient(center top , #333333, #222222);
+    background-repeat: repeat-x;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), 0 -1px 0 rgba(0, 0, 0, 0.1) inset;
+}
 .cm-s-monokai span.CodeMirror-selected { background: #FFE792 !important; }
 .cm-s-monokai .CodeMirror-gutter { background: #272822; border-right: 0px; }
 .cm-s-monokai .CodeMirror-gutter-text { color: #d0d0d0; }
@@ -25,3 +30,14 @@
 	text-decoration: underline;
 	color: white !important;
 }
+
+.cm-s-monokai span.cm-header {font-weight:bold; color: #E6DB74;}
+.cm-s-monokai span.cm-code {color: #A6E22E;}
+.cm-s-monokai span.cm-quote {color: #F92672;}
+.cm-s-monokai span.cm-list {color: #AE81FF;}
+.cm-s-monokai span.cm-hr {color: #999;}
+.cm-s-monokai span.cm-linktext {color: #FD971F; text-decoration: underline;}
+.cm-s-monokai span.cm-linkhref {color: #FD971F;}
+.cm-s-monokai span.cm-em {font-style: italic;}
+.cm-s-monokai span.cm-strong {font-weight: bold;}
+.cm-s-monokai span.cm-emstrong {font-style: italic; font-weight: bold;}

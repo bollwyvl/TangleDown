@@ -15,6 +15,8 @@ register = template.Library()
 
 STRIP_CODE = re.compile(r'<pre><code class="(update|initialize|equations)">.*?</code></pre>', re.M | re.S)
 
+MD_EXTENSIONS = ['tangle', 'fenced_code', 'def_list']
+
 @register.simple_tag(takes_context=True)
 def tangle_imports(context):
     template = get_template("tangle/tangle_imports.html")
@@ -23,7 +25,7 @@ def tangle_imports(context):
 @register.simple_tag(takes_context=True)
 def tangledown(context, tangleable):
     return re.sub(STRIP_CODE, '',
-                  markdown.markdown(tangleable, extensions=['tangle', 'fenced_code'])
+                  markdown.markdown(tangleable, extensions=MD_EXTENSIONS)
                   )
 
 
@@ -77,6 +79,6 @@ def tangle_tree(tangleable):
     TODO: at some point, Markdown must have the tree available, and 
           we shouldn't have to reparse to get it
     """
-    md = markdown.Markdown(extensions=['tangle', 'fenced_code'])
+    md = markdown.Markdown(extensions=MD_EXTENSIONS)
     html = md.convert(tangleable)
     return markdown.util.etree.XML('<body>%s</body>' % html)
