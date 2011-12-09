@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-us">
     
-<!-- Mirrored from localhost:8000/ by HTTrack Website Copier/3.x [XR&CO'2010], Sat, 03 Dec 2011 21:07:48 GMT -->
+<!-- Mirrored from localhost:8000/ by HTTrack Website Copier/3.x [XR&CO'2010], Fri, 09 Dec 2011 00:33:51 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8"><!-- /Added by HTTrack -->
 <head>
         <meta charset="utf-8" />
@@ -27,35 +27,47 @@
         
             
 
+<script type="text/javascript" src="site_media/static/js/json2.js"></script>
+<script type="text/javascript" src="site_media/static/js/underscore-min.js"></script>
+
 <!-- Tangle -->
 <script type="text/javascript" src="site_media/static/js/Tangle.js"></script>
-
-<!-- TangleKit (optional... just kidding) -->
-<link rel="stylesheet" href="site_media/static/css/TangleKit.css" type="text/css">
 
 <script type="text/javascript" src="site_media/static/js/mootools.js"></script>
 <script type="text/javascript" src="site_media/static/js/sprintf.js"></script>
 <script type="text/javascript" src="site_media/static/js/BVTouchable.js"></script>
 <script type="text/javascript" src="site_media/static/js/TangleKit.js"></script>
 
+
+
+<!-- TangleKit -->
+<link rel="stylesheet" href="site_media/static/css/TangleKit.css" type="text/css">
+
+<!-- TangleDown -->
+<script type="text/javascript" src="site_media/static/js/TangleDown.js"></script>
 <script type="text/javascript">
-    function setUpTangletangle_this() {
-    	var tangletangle_this = new Tangle($('#tangle_this')[0], {
+    function setUpTangle_tangle_this() {
+    	var tangle_tangle_this = new Tangle($('#tangle_this')[0], {
     		initialize: function () {
-    			this.cookies= 3;
+    			    this.cookies= 3;
 this.calories= 150;
 this.dailypercent= 1;
 this.dailycalories= 2100;
+this.overninek= 0;
+    		    
     		},
     		update: function () {
-    			this.calories= this.cookies * 50;
+    		    
+    			    this.calories= this.cookies * 50;
 this.dailypercent= (this.cookies * 50) / this.dailycalories;
+this.overninek= this.calories > 9000;
+    			
     		}
     	});
     }
     
     $(function(){
-        setUpTangletangle_this();
+        setUpTangle_tangle_this();
     })
 </script>
 
@@ -70,7 +82,23 @@ this.dailypercent= (this.cookies * 50) / this.dailycalories;
                         
                             <h3><a href="index.html">tangledown.org</a></h3>
                             
+    <ul class="nav">
+        <li class="dropdown">
+            <a class="dropdown-toggle" href="#">Examples</a>
+            <ul class="dropdown-menu">
+                <li>
+                    <a href="wiki/home/index.html">Cookies</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="wiki/syntax/index.html">Syntax</a>
+        </li>
+    </ul>
+
                             
+
+
                         
                     </div>
                 </div>
@@ -95,22 +123,28 @@ the sexiness of <a href="http://worrydream.com/Tangle">Tangle.js</a> reactive do
         <div class="span7">
             <h3>You type</h3>
                 <pre>If you eat t[number](cookies &#39; cookies&#39;), you consume t[](calories &#39; calories&#39;). This constitutes t[](dailypercent percent) of a daily intake of t[number](100&lt;dailycalories..100 &#39; calories&#39;).
+
+t[if](overninek)
+~ # It&#39;s over 9000!
+
 ~~~~.initialize
 #cookies: 3
 #calories: 150
 #dailypercent: 1
 #dailycalories: 2100
+#overninek: 0
 ~~~~
 ~~~~.update
 #calories: #cookies * 50
 #dailypercent: (#cookies * 50) / #dailycalories
+#overninek: #calories &gt; 9000
 ~~~~</pre>
         </div>
         <div class="span7">
             <h3>You get</h3>
                 <div id="tangle_this" class="alert-message block-message info">
-                <p>If you eat <span class="TKAdjustableNumber" data-var="cookies"> cookies</span>, you consume <span data-var="calories"> calories</span>. This constitutes <span data-format="percent" data-var="dailypercent"></span> of a daily intake of <span class="TKAdjustableNumber" data-min="100" data-step="100" data-var="dailycalories"> calories</span>.</p>
-
+                <p>If you eat <span class="TKAdjustableNumber" data-var="cookies"> cookies</span>, you consume <span class="NoneType" data-var="calories"> calories</span>. This constitutes <span class="NoneType" data-format="percent" data-var="dailypercent"></span> of a daily intake of <span class="TKAdjustableNumber" data-min="100" data-step="100" data-var="dailycalories"> calories</span>.</p>
+<span class="TKIf" data-var="overninek"><span class="TKBranchOption"><h1>It's over 9000!</h1></span></span>
 
 
                 </div>
@@ -190,6 +224,6 @@ the sexiness of <a href="http://worrydream.com/Tangle">Tangle.js</a> reactive do
         
     </body>
 
-<!-- Mirrored from localhost:8000/ by HTTrack Website Copier/3.x [XR&CO'2010], Sat, 03 Dec 2011 21:07:54 GMT -->
+<!-- Mirrored from localhost:8000/ by HTTrack Website Copier/3.x [XR&CO'2010], Fri, 09 Dec 2011 00:34:02 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8"><!-- /Added by HTTrack -->
 </html>

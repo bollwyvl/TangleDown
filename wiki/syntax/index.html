@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    
+<!-- Mirrored from localhost:8000/wiki/syntax/ by HTTrack Website Copier/3.x [XR&CO'2010], Fri, 09 Dec 2011 00:34:06 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8"><!-- /Added by HTTrack -->
+<head>
+        <meta charset="utf-8" />
+        <title>tangledown.org : 
+    TangleDown Syntax
+</title>
+        <!-- HTML5 shim, for IE6-8 support of HTML elements -->
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <link rel="shortcut icon" href="../../site_media/static/img/favicon.ico" />
+        <link rel="stylesheet" href="../../site_media/static/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../../site_media/static/css/extra.css">
+        <script src="../../site_media/static/js/jquery-1.7.min.js"></script>
+        <script src="../../site_media/static/js/jquery.form.js"></script>
+        <script src="../../site_media/static/js/bootstrap-alerts.js"></script>
+        <script src="../../site_media/static/js/bootstrap-twipsy.js"></script>
+        <script src="../../site_media/static/js/bootstrap-popover.js"></script>
+        <script src="../../site_media/static/js/bootstrap-dropdown.js"></script>
+        <script src="../../site_media/static/js/bootstrap-tabs.js"></script>
+        <script src="../../site_media/static/js/bootstrap-scrollspy.js"></script>
+        <script src="../../site_media/static/js/bootstrap-buttons.js"></script>
+        <script src="../../site_media/static/js/theme.js"></script>
+        <script src="../../site_media/static/js/pinax.modal.js"></script>
+        
+            
+    
+    <script type="text/javascript" src="../../site_media/static/js/json2.js"></script>
+<script type="text/javascript" src="../../site_media/static/js/underscore-min.js"></script>
+
+<!-- Tangle -->
+<script type="text/javascript" src="../../site_media/static/js/Tangle.js"></script>
+
+<script type="text/javascript" src="../../site_media/static/js/mootools.js"></script>
+<script type="text/javascript" src="../../site_media/static/js/sprintf.js"></script>
+<script type="text/javascript" src="../../site_media/static/js/BVTouchable.js"></script>
+<script type="text/javascript" src="../../site_media/static/js/TangleKit.js"></script>
+
+
+
+<!-- TangleKit -->
+<link rel="stylesheet" href="../../site_media/static/css/TangleKit.css" type="text/css">
+
+<!-- TangleDown -->
+<script type="text/javascript" src="../../site_media/static/js/TangleDown.js"></script>
+    <script type="text/javascript">
+    function setUpTangle_tangle_body() {
+    	var tangle_tangle_body = new Tangle($('#tangle_body')[0], {
+    		initialize: function () {
+    			    this.answer= 42;
+this.heads= 2;
+this.tenses= 1001;
+this.timessmarter= 30000000000;
+this.years= 7;
+this.lights= 0;
+    		    
+    		},
+    		update: function () {
+    		    
+    			    this.days= this.years * 365;
+this.kilowatts= this.lights * 100;
+    			
+    		}
+    	});
+    }
+    
+    $(function(){
+        setUpTangle_tangle_body();
+    })
+</script>
+
+        
+    </head>
+    <body class="" id="">
+        
+        
+            <div class="topbar">
+                <div class="fill">
+                    <div class="container">
+                        
+                            <h3><a href="../../index.html">tangledown.org</a></h3>
+                            
+    <ul class="nav">
+        <li class="dropdown">
+            <a class="dropdown-toggle" href="#">Examples</a>
+            <ul class="dropdown-menu">
+                <li>
+                    <a href="../home/index.html">Cookies</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="index.html">Syntax</a>
+        </li>
+    </ul>
+
+                            
+
+
+                        
+                    </div>
+                </div>
+            </div>
+        
+        
+        
+            <div class="container">
+                
+
+                
+    <div class="row">
+        <div class="span13">
+        
+    <div id="tangle_body">
+    <h1>TangleDown Syntax 
+        
+    </h1>
+    <p>
+        <p>TangleDown is generally added to a Markdown document by </p>
+<ul>
+<li>creating "fenced code" blocks of initial variable values and relationships between variables</li>
+<li>creating inline <code>t[]()</code> tags for views of variables</li>
+<li>creating block header <code>t[]()</code> tags for branching constructs based on variables</li>
+</ul>
+<h2>Code Blocks</h2>
+<p>The goal of TangleDown is to not feel too much like coding, but we need to know a little more than how you want to view and interact with your data. To make your document reactive, TangleDown needs two types of code: <code>initialize</code> and <code>update</code>. A variable, used in a view somewhere, needs to appear in either or both code blocks in order to work properly.</p>
+<h3><code>initialize</code></h3>
+<p>Any number of <code>initialize</code> fenced code blocks will be read, and the variables mentioned there will be created and available for use when the page loads. </p>
+<pre><code>~~~~.initialize
+#cookies: 1
+~~~~
+</code></pre>
+<p>will get magically munged into. This is probably a huge XSS vulnerability: working on it.</p>
+<pre><code class="javascript">    this.cookies = 1
+</code></pre>
+
+<p>Immediately after <code>initialize</code> is called, and every time a viewer interacts with a view, all <code>update</code> expressions will be reevaluated.</p>
+<pre><code>~~~~.update
+#calories: #cookies * 50
+~~~~
+</code></pre>
+<p>will become:</p>
+<pre><code class="javascript">    this.calories = this.cookies * 50
+</code></pre>
+
+<p>Right now, the translation is pretty minimal, so basically you'll have to use JavaScript math notation, except with the <code>#</code> notation... hopefully this makes it a little easier to read the "code", without taking away too much power. A lot of useful operators are available out of the box: </p>
+<pre><code>+, /, %, *
+</code></pre>
+<p>while the <code>Math</code> object provides many others: <em>from <a href="http://www.javascripter.net/faq/mathfunc.htm">javascripters</a></em></p>
+<pre><code>Math.abs(a)     // the absolute value of a
+Math.acos(a)    // arc cosine of a
+Math.asin(a)    // arc sine of a
+Math.atan(a)    // arc tangent of a
+Math.atan2(a,b) // arc tangent of a/b
+Math.ceil(a)    // integer closest to a and not less than a
+Math.cos(a)     // cosine of a
+Math.exp(a)     // exponent of a (Math.E to the power a)
+Math.floor(a)   // integer closest to a, not greater than a
+Math.log(a)     // log of a base e
+Math.max(a,b)   // the maximum of a and b
+Math.min(a,b)   // the minimum of a and b
+Math.pow(a,b)   // a to the power b
+Math.random()   // pseudorandom number 0 to 1 (see examples)
+Math.round(a)   // integer closest to a (see rounding examples)
+Math.sin(a)     // sine of a
+Math.sqrt(a)    // square root of a
+Math.tan(a)     // tangent of a
+</code></pre>
+<h2>Basic Number View</h2>
+
+
+<p>The basic Tangle number view is a display-only, inline text span which will show a variable, such that typing</p>
+<pre><code> The answer to life, the universe and everything is t[](answer)
+</code></pre>
+<p>will create</p>
+<blockquote>
+<p>The answer to life, the universe and everything is <span class="NoneType" data-var="answer"></span></p>
+</blockquote>
+<p>Basic views can optionally be formatted and labeled:</p>
+<pre><code> Zaphod has t[](heads ' heads')
+</code></pre>
+<p>will create</p>
+<blockquote>
+<p>Zaphod has <span class="NoneType" data-var="heads"> heads</span></p>
+</blockquote>
+<p>while</p>
+<pre><code> I am at a rough estimate t[](timessmarter humanized ' times') more intelligent than you
+</code></pre>
+<p>will create</p>
+<blockquote>
+<p>I am at a rough estimate <span class="NoneType" data-format="humanized" data-var="timessmarter"> times</span> more intelligent than you</p>
+</blockquote>
+<h2>Editable Views</h2>
+<p>The real power of Tangle lies in the intuitive editable views. Several are available from TangleKit.</p>
+<h3>Adjustable Number</h3>
+
+
+
+
+<p>The adjustable number provides a lot of flexiblity without requiring too much extra definition. The basic form shows a whole number (non-negative integer), which can be clicked on and dragged to the right or the left to change numbers:</p>
+<pre><code>I am t[number](years ' years old'), so have been alive at least t[](days ' days')
+</code></pre>
+<p>yields</p>
+<blockquote>
+<p>I am <span class="TKAdjustableNumber" data-var="years"> years old</span>, so have been alive at least <span class="NoneType" data-var="days"> days</span>.</p>
+</blockquote>
+<p><code>number</code> can be customized with minimum, maxmimum and increment values (as well as formats and labels like the read-only view). All are optional.</p>
+<pre><code>I am t[number](10&lt;years..10&lt;100 ' years old'), so have been alive at least t[](days ' days')
+</code></pre>
+<p>yields</p>
+<blockquote>
+<p>I am <span class="TKAdjustableNumber" data-min="10" data-step="100" data-var="years"> years old</span>, so have been alive at least <span class="NoneType" data-var="days"> days</span>.</p>
+</blockquote>
+<h3>Number Field View</h3>
+<p>Sometimes, just typing a number is more intuitive than hunting for it through clicking and dragging. TangleKit provides for this case:</p>
+<pre><code>I am t[field](years) old, so have been alive at least t[](days ' days').
+</code></pre>
+<p>yields</p>
+<blockquote>
+<p>I am <span class="TKNumberField" data-var="years"></span> old, so have been alive at least <span class="NoneType" data-var="days"> days</span>.</p>
+</blockquote>
+<h2>Branching</h2>
+
+
+
+
+<p>TangleDown can create several kinds of branching, so that parts of your document show up when certain conditions are met, sort of like "choose your own adventures".</p>
+<p>The simplest type is an interactive view which changes a variable between <em>0</em> and <em>1</em>.</p>
+<pre><code>The lights are t[toggle](lights)[off][on]. You are using t[](kilowatts ' kW')
+</code></pre>
+<p>makes</p>
+<blockquote>
+<p>The lights are <span class="TKToggle TKSwitch" data-var="lights"><span>off, and it is very 
+    dark in here</span><span>on and it is very
+    bright</span></span>. You are using <span class="NoneType" data-var="kilowatts"> kW</span> </p>
+</blockquote>
+<p>If you have more to say than you </p>
+<pre><code>t[switch](lights)
+|   It is dark. 
+    You might be eaten by a grue.
+
+|   In the glaring light, 
+    at least you can see the grue.
+</code></pre>
+<p>creates</p>
+<blockquote><span class="TKSwitch" data-var="lights"><span class="TKBranchOption">It is dark. You might be eaten by a grue.</span><span class="TKBranchOption">In the glaring light, at least you can see the grue.</span></span></blockquote>
+<h2>Formats</h2>
+<p>Formatting either uses the <code>sprintf</code> technique, which feels a lot like coding, but gets the job done.</p>
+<p>Additionally, some more formatters are available, which return the values as:</p>
+<dl>
+<dt><code>cents_as_dollars</code></dt>
+<dd>number of pennies as dollars and cents<blockquote>
+<p><code>1000</code> to <em>$10.00</em></p>
+</blockquote>
+</dd>
+<dt><code>humanized</code></dt>
+<dd>
+<p>spelled out in english words</p>
+<blockquote>
+<p>`12007021 to <em>one million two hundred thousand seven hundred two</em></p>
+</blockquote>
+</dd>
+<dt><code>p3</code></dt>
+<dd>
+<p>decimal with precision to the thousandths</p>
+<blockquote>
+<p><code>.0011231</code> to <em>.001</em></p>
+</blockquote>
+</dd>
+<dt><code>neg_p3</code></dt>
+<dd>
+<p>negative value with precision to the thousandths</p>
+<blockquote>
+<p><code>.0011231</code> to <em>-.001</em></p>
+</blockquote>
+</dd>
+<dt><code>p3</code></dt>
+<dd>
+<p>decimal with precision to the hundredths</p>
+<blockquote>
+<p><code>.011231</code> to <em>.01</em></p>
+</blockquote>
+</dd>
+<dt><code>e6</code></dt>
+<dd>
+<p>floored to the millions</p>
+<blockquote>
+<p><code>12007021</code> to <em>1</em></p>
+</blockquote>
+</dd>
+<dt><code>abs_e6</code></dt>
+<dd>
+<p>floored to the millions, absolute</p>
+<blockquote>
+<p><code>-12007021</code> to <em>1</em></p>
+</blockquote>
+</dd>
+<dt><code>freq</code></dt>
+<dd>
+<p>as a frequency</p>
+<blockquote>
+<p><code>3000</code> to <em>3 KHz</em></p>
+</blockquote>
+</dd>
+<dt><code>dollars</code></dt>
+<dd>
+<p>dollars without cents</p>
+<blockquote>
+<p><code>10.01</code> to <em>$10</em></p>
+</blockquote>
+</dd>
+<dt><code>free</code></dt>
+<dd>
+<p>like dollars, but free if zero</p>
+<blockquote>
+<p><code>0.0</code> to <em>free</em> </p>
+</blockquote>
+</dd>
+<dt><code>percent</code></dt>
+<dd>
+<p>a percent</p>
+<blockquote>
+<p><code>.7121</code> to <em>71%</em></p>
+</blockquote>
+</dd>
+</dl>
+    </p>
+    </div>
+
+        </div>
+        <div class="span3">
+            
+            <h2>Navigate</h2>
+            <ul>
+                
+                <li><a href="../home/index.html">Home</a></li>
+                
+                <li><a href="../sympy/index.html">Sympy</a></li>
+                
+                <li><a href="../coins/index.html">Coins</a></li>
+                
+                <li><a href="index.html">TangleDown Syntax</a></li>
+                
+            </ul>
+            <form method="get" action="http://localhost:8000/wiki">
+                <input class="span2" type="text" name="new" placeholder="New Page"/>
+                <button class="btn">GO</button>
+            </form>
+            
+        </div>
+    </div>
+
+            </div>
+        
+        
+        
+            <div id="footer">
+                <div class="inner">
+                    <div class="container">
+                        
+    
+<a href="http://github.com/bollwyvl/tangledown"><img style="position: absolute; top: 35px; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/30f550e0d38ceb6ef5b81500c64d970b7fb0f028/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub"></a>
+    
+<div class="legal">
+    &copy; 2011 tangledown.org
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+        
+        
+            
+        
+    </body>
+
+<!-- Mirrored from localhost:8000/wiki/syntax/ by HTTrack Website Copier/3.x [XR&CO'2010], Fri, 09 Dec 2011 00:34:06 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8"><!-- /Added by HTTrack -->
+</html>

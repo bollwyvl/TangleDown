@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    
+<!-- Mirrored from localhost:8000/wiki/coins/ by HTTrack Website Copier/3.x [XR&CO'2010], Fri, 09 Dec 2011 00:34:06 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8"><!-- /Added by HTTrack -->
+<head>
+        <meta charset="utf-8" />
+        <title>tangledown.org : 
+    Coins
+</title>
+        <!-- HTML5 shim, for IE6-8 support of HTML elements -->
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <link rel="shortcut icon" href="../../site_media/static/img/favicon.ico" />
+        <link rel="stylesheet" href="../../site_media/static/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../../site_media/static/css/extra.css">
+        <script src="../../site_media/static/js/jquery-1.7.min.js"></script>
+        <script src="../../site_media/static/js/jquery.form.js"></script>
+        <script src="../../site_media/static/js/bootstrap-alerts.js"></script>
+        <script src="../../site_media/static/js/bootstrap-twipsy.js"></script>
+        <script src="../../site_media/static/js/bootstrap-popover.js"></script>
+        <script src="../../site_media/static/js/bootstrap-dropdown.js"></script>
+        <script src="../../site_media/static/js/bootstrap-tabs.js"></script>
+        <script src="../../site_media/static/js/bootstrap-scrollspy.js"></script>
+        <script src="../../site_media/static/js/bootstrap-buttons.js"></script>
+        <script src="../../site_media/static/js/theme.js"></script>
+        <script src="../../site_media/static/js/pinax.modal.js"></script>
+        
+            
+    
+    <script type="text/javascript" src="../../site_media/static/js/json2.js"></script>
+<script type="text/javascript" src="../../site_media/static/js/underscore-min.js"></script>
+
+<!-- Tangle -->
+<script type="text/javascript" src="../../site_media/static/js/Tangle.js"></script>
+
+<script type="text/javascript" src="../../site_media/static/js/mootools.js"></script>
+<script type="text/javascript" src="../../site_media/static/js/sprintf.js"></script>
+<script type="text/javascript" src="../../site_media/static/js/BVTouchable.js"></script>
+<script type="text/javascript" src="../../site_media/static/js/TangleKit.js"></script>
+
+
+
+<!-- TangleKit -->
+<link rel="stylesheet" href="../../site_media/static/css/TangleKit.css" type="text/css">
+
+<!-- TangleDown -->
+<script type="text/javascript" src="../../site_media/static/js/TangleDown.js"></script>
+    <script type="text/javascript">
+    function setUpTangle_tangle_body() {
+    	var tangle_tangle_body = new Tangle($('#tangle_body')[0], {
+    		initialize: function () {
+    			    this.total= 300;
+this.coins= 5;
+    		    
+    		        this.__constraints = [["#coins", "#pennies + #nickels + #dimes + #quarters + #halfdollars + #dollars"], ["#total", "#pennies + 5*#nickels + 25*#quarters + 10*#dimes  + 50*#halfdollars + 100*#dollars"]];
+    		        $.extend(this, TangleDown.tangledownload(this))
+    			
+    		},
+    		update: function () {
+    		    
+    		        $.extend(this, TangleDown.tangledownload(this))
+    		    
+    		}
+    	});
+    }
+    
+    $(function(){
+        setUpTangle_tangle_body();
+    })
+</script>
+
+        
+    </head>
+    <body class="" id="">
+        
+        
+            <div class="topbar">
+                <div class="fill">
+                    <div class="container">
+                        
+                            <h3><a href="../../index.html">tangledown.org</a></h3>
+                            
+    <ul class="nav">
+        <li class="dropdown">
+            <a class="dropdown-toggle" href="#">Examples</a>
+            <ul class="dropdown-menu">
+                <li>
+                    <a href="../home/index.html">Cookies</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="../syntax/index.html">Syntax</a>
+        </li>
+    </ul>
+
+                            
+
+
+                        
+                    </div>
+                </div>
+            </div>
+        
+        
+        
+            <div class="container">
+                
+
+                
+    <div class="row">
+        <div class="span13">
+        
+    <div id="tangle_body">
+    <h1>Coins 
+        
+    </h1>
+    <p>
+        <p>If you want to make <span class="TKAdjustableNumber" data-format="cents_as_dollars" data-min="0" data-var="total"></span> with <span class="TKAdjustableNumber" data-var="coins"> coins</span>, use <span class="NoneType" data-var="pennies"> pennies</span>, <span class="NoneType" data-var="nickels"> nickels</span>, <span class="NoneType" data-var="dimes"> dimes</span>, <span class="NoneType" data-var="quarters"> quarters</span>, <span class="NoneType" data-var="halfdollars"> halfdollars</span> and <span class="NoneType" data-var="dollars"> dollars</span>.</p>
+
+
+
+
+<p><em>Right now, TangleDown cannot solve this kind of problem. For one, it is underconstrained. Additionally, SymPy doens't solve inequalities in a way that would be easily captured through simple text Markdown. Using OpenMDAO, again, would solve this problem.</em></p>
+    </p>
+    </div>
+
+        </div>
+        <div class="span3">
+            
+            <h2>Navigate</h2>
+            <ul>
+                
+                <li><a href="../home/index.html">Home</a></li>
+                
+                <li><a href="../sympy/index.html">Sympy</a></li>
+                
+                <li><a href="index.html">Coins</a></li>
+                
+                <li><a href="../syntax/index.html">TangleDown Syntax</a></li>
+                
+            </ul>
+            <form method="get" action="http://localhost:8000/wiki">
+                <input class="span2" type="text" name="new" placeholder="New Page"/>
+                <button class="btn">GO</button>
+            </form>
+            
+        </div>
+    </div>
+
+            </div>
+        
+        
+        
+            <div id="footer">
+                <div class="inner">
+                    <div class="container">
+                        
+    
+<a href="http://github.com/bollwyvl/tangledown"><img style="position: absolute; top: 35px; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/30f550e0d38ceb6ef5b81500c64d970b7fb0f028/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub"></a>
+    
+<div class="legal">
+    &copy; 2011 tangledown.org
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+        
+        
+            
+        
+    </body>
+
+<!-- Mirrored from localhost:8000/wiki/coins/ by HTTrack Website Copier/3.x [XR&CO'2010], Fri, 09 Dec 2011 00:34:06 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8"><!-- /Added by HTTrack -->
+</html>
