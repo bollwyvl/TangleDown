@@ -11,7 +11,7 @@ from tangle.markdown import mdx_tangle
 
 def home(request):
     ctxt = {
-        'sample': WikiPage.objects.order_by('?')[0],
+        'sample': WikiPage.objects.get(name='home'),
     }
     
     

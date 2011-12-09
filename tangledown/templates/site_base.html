@@ -4,7 +4,22 @@
 <link rel="shortcut icon" type="image/png" href="{{STATIC_URL}}img/favicon.ico">
 {% endblock %}
 
-{% block account_bar %}{% endblock %}
+{% block account_bar %}
+{% if user.is_authenticated %}
+<ul class="secondary-nav">
+        <li>
+            <a href="#" class="menu">{{ user }}</a>
+            <ul class="menu-dropdown">
+                {% if user.is_staff %}
+                    <li><a href="/admin/">Admin</a></li>
+                {% endif %}
+                <li class="divider"></li>
+                <li><a href="/admin/logout?next={{request.get_full_path}}">Logout</a></li>
+            </ul>
+        </li>
+</ul>
+{% endif %}
+{% endblock %}
 
 {% block nav %}
     <ul class="nav">
@@ -12,12 +27,12 @@
             <a class="dropdown-toggle" href="#">Examples</a>
             <ul class="dropdown-menu">
                 <li>
-                    <a href="">Cookies</a>
+                    <a href="/wiki/home">Cookies</a>
                 </li>
             </ul>
         </li>
         <li>
-            <a href="/tangle/syntax">Syntax</a>
+            <a href="/wiki/syntax">Syntax</a>
         </li>
     </ul>
 {% endblock %}

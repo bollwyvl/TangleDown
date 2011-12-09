@@ -157,6 +157,8 @@ INSTALLED_APPS = [
     "debug_toolbar",
     
     # Pinax
+    'pinax.apps.account',
+    'emailconfirmation',
     
     # project
     "luau",

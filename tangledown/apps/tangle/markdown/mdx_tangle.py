@@ -152,7 +152,7 @@ class TangleExtension(markdown.Extension):
                                       TKIfProcessor(md.parser),
                                       '>ulist')
 
-def tk_span(cls, text=None, ignore=[], children=[], **kwargs):
+def tk_span(cls_or_class, text=None, ignore=[], children=[], **kwargs):
     """
     Helper function. Creates the "normal" TangleKit spans.
     """
@@ -161,8 +161,10 @@ def tk_span(cls, text=None, ignore=[], children=[], **kwargs):
     [obj.append(c) for c in children]
     if text:
         obj.text = text
-    if cls:
-        obj.set('class', cls.__class__.__name__)
+    if isinstance(cls_or_class, str):
+        obj.set('class', cls_or_class)
+    else:
+        obj.set('class', cls_or_class.__class__.__name__)
     [obj.set(k, v) for k, v in kwargs.items()]
     return obj
 
@@ -233,8 +235,9 @@ class TKSwitchProcessor(TKBranchingProcessor):
     RE = re.compile(r'(^|\n)[ ]{0,3}\|[ ]{1,3}(.*?)(\n|$)')
     
     def term_handler(self, tree, term):
-        term_match = re.match(r't\[switch\]\(\s*(?P<var>[^\)\s]*)\s*\)', term).groupdict()
-        tree.set('data-var', term_match['var'])
+        term_match = re.match(r't\[switch\]\(\s*(?P<var>[^\)\s]*)\s*\)', term)
+        if term_match:
+            tree.set('data-var', term_match.groupdict()['var'])
 
 class TKIfProcessor(TKBranchingProcessor):
     tree_class = 'TKIf'
@@ -283,12 +286,13 @@ class TKToggle(markdown.inlinepatterns.Pattern):
         children = []
         text = ""
         bits = m.groupdict()
+        kwargs['var'] = bits['var']
         for op_text in [bits['op0'], bits['op1']]:
             op = markdown.util.etree.Element('span')
             op.text = op_text
             children.append(op)
         kwargs = bits
-        return tk_span(self, children=children, ignore=['op0', 'op1'], **kwargs)
+        return tk_span('TKToggle TKSwitch', children=children, ignore=['op0', 'op1'], **kwargs)
         
 TangleExtension.tangle_inline_classes.append(TKToggle)
 

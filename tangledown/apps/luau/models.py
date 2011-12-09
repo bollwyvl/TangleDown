@@ -14,6 +14,9 @@ class WikiPage(models.Model):
     body = models.TextField(blank=True,
         help_text="The page body, with Markdown and TangleDown")
 
+    @property
+    def uses_sympy(self):
+        return '~~~~.equations' in self.body
 
     def __unicode__(self):
         return u"%s" % self.name
