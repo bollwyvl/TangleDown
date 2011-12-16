@@ -15,7 +15,7 @@ register = template.Library()
 
 STRIP_CODE = re.compile(r'<pre><code class="(update|initialize|equations)">.*?</code></pre>', re.M | re.S)
 
-MD_EXTENSIONS = ['tangle', 'fenced_code', 'def_list']
+MD_EXTENSIONS = ['tangle', 'fenced_code', 'def_list', 'tables']
 
 @register.simple_tag(takes_context=True)
 def tangle_imports(context):

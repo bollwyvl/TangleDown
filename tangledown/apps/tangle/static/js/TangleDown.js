@@ -57,6 +57,10 @@ Tangle.formats.cents_as_dollars = function (value) {
     return sprintf("$%d.", dollars) + sprintf("%02d", value - dollars * 100);
 };
 
+Tangle.formats.percent_2 = function(value){
+    return sprintf('%.2f%%', value*100)
+}
+
 Tangle.formats.humanized = function (value) {
     /* Ruthlessly plundered from
     http://stackoverflow.com/a/5530230
