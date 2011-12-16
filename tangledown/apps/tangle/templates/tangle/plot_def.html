@@ -1,0 +1,44 @@
+{% for series in serieses %}
+TangleDown.plot_data['{{ id }}_{{ forloop.counter }}'] = [{x: 0, y:0}];
+{% endfor %}
+
+TangleDown.plots['{{ id }}'] = new Rickshaw.Graph( {
+  element: document.querySelector('#plot_{{ id }}'),
+  renderer: '{{ renderer }}',
+  series: [
+    {% for series in serieses %}
+    {
+      name: '{{ series.name }}',
+      {% if series.color %}
+      color: '{{ series.color }}',
+      {% endif %}
+      data: TangleDown.plot_data['{{ id }}_{{ forloop.counter }}']
+    }{% if forloop.last %}{% else %},{% endif %}
+    {% endfor %}
+  ]
+} );
+
+TangleDown.plots['{{ id }}'].render()
+
+TangleDown.axes['{{ id }}'] = new Rickshaw.Graph.Axis.Time( {
+	graph: TangleDown.plots['{{ id }}']
+} );
+
+
+TangleDown.axes['{{ id }}'].render();
+
+new Rickshaw.Graph.Axis.Y( {
+	graph: TangleDown.plots['{{ id }}'],
+	orientation: 'left',
+	tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
+	element: document.getElementById('y_{{ id }}'),
+} );
+
+new Rickshaw.Graph.Legend( {
+        element: document.querySelector('#legend_{{ id }}'),
+       graph: TangleDown.plots['{{ id }}'],
+} );
+
+new Rickshaw.Graph.HoverDetail( {
+	graph: TangleDown.plots['{{ id }}']
+} );

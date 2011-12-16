@@ -67,8 +67,9 @@
     "pk": 5, 
     "model": "luau.wikipage", 
     "fields": {
-      "body": "If you take out a loan for t[number](principal..1000 dollars) at t[number](0<interest..0.0001 percent_2) in t[number](2011<start) and make a monthly payment of t[number](payment dollars):\r\n\r\n~~~~.initialize\r\n#principal: 100000\r\n#interest: .0475\r\n#start: 2011\r\n#payment: 1000\r\n~~~~\r\n\r\n#month | #remaining\r\n-------|------------\r\n0      | #principal\r\n+1     | * (1 + #interest/12) - #payment\r\n       | >= 0 ", 
+      "body": "If you take out a loan for t[number](principal..1000 dollars) at t[number](0<interest..0.0001 percent_2) in t[number](2011<start) and make a monthly payment of t[number](payment..25 dollars), the loan will be paid off in t[](num_months) months.\n\n~~~~.initialize\n#principal: 100000\n#interest: .0475\n#start: 2011\n#payment: 1000\n~~~~\n\n~~~~.update\n#num_months: #month.length\n~~~~\n\n#month                     | #remaining                      | #paid\n---------------------------|---------------------------------|-----------\n(#start - 1970) * 31556926 | #principal                      | 0\n+2592000                   | * (1 + #interest/12) - #payment | + #payment\n                           | >= 0                            |\n\n## Principal Remaining vs Total Paid\n~~~~.chartjunk\ntype: line\n\nPrincipal\ncolor: red\nx: #month\ny: #remaining\n\nTotal Paid\ncolor: steelblue\nx: #month\ny: #paid\n~~~~", 
       "name": "mortgage", 
       "title": "Mortgage"
     }
+  }
 ]

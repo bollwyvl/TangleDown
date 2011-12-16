@@ -5,4 +5,5 @@ urlpatterns = patterns("luau.views",
     url(r'^$', 'show_page'),
     url(r'^(?P<page_slug>[^/]*)/$', 'show_page'),
     url(r'^(?P<page_slug>[^/]*)/edit/$', 'edit_page'),
+    url(r'^(?P<page_slug>[^/]*)/src/$', 'show_page', {'show_src': True}),
 )

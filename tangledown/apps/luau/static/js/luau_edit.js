@@ -5,6 +5,7 @@ $(function(){
         theme: 'monokai',
         matchBrackets: true,
         width:'700px',
+        height:'700px',
         lineWrapping: true,
         extraKeys: {"F11": toggleFullscreenEditing, "Esc": toggleFullscreenEditing}
     });

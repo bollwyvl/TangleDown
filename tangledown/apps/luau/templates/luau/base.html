@@ -17,10 +17,12 @@
                 <li><a href="/wiki/{{other_page.name}}">{{other_page.title}}</a></li>
                 {% endfor %}
             </ul>
+            {% if user.is_authenticated %}
             <form method="get" action="/wiki">
                 <input class="span2" type="text" name="new" placeholder="New Page"/>
                 <button class="btn">GO</button>
             </form>
+            {% endif %}
             {% endblock %}
         </div>
     </div>

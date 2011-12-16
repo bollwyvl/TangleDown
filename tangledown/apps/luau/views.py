@@ -9,7 +9,7 @@ from util.shortcuts import context_response
 from luau.models import WikiPage
 from luau.forms import WikiPageForm
 
-def show_page(request, page_slug=None):
+def show_page(request, page_slug=None, show_src=False):
     """
     Show a WikiPage (or redirect to LUAU_DEFAULT_SLUG)
     """
@@ -32,6 +32,7 @@ def show_page(request, page_slug=None):
     ctxt = dict(
         page=page,
         pages=WikiPage.objects.all(),
+        show_src=show_src,
     )
          
     return context_response(request, 'luau/show.html', ctxt)

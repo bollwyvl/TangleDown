@@ -1,0 +1,11 @@
+outer_this = this;
+{% for series in serieses %}
+    TangleDown.plot_data['{{ id }}_{{ forloop.counter }}'].splice(0);
+    _(outer_{{ series.x }}).map(function(x_v, idx){
+        TangleDown.plot_data['{{ id }}_{{ forloop.counter }}'].push({
+            x: x_v, 
+            y: outer_{{ series.y }}[idx]
+        });
+    });
+{% endfor %}
+TangleDown.plots['{{ id }}'].update();

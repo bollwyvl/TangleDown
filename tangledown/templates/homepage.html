@@ -17,7 +17,7 @@
     <h1>{% trans "Get Ready to TangleDown" %}</h1>
         <p>
             <strong>tangledown</strong> combines the simplicity of <a href="http://daringfireball.net/projects/markdown">Markdown</a> <a href="http://daringfireball.net/projects/markdown/syntax">syntax</a> with
-the sexiness of <a href="http://worrydream.com/Tangle">Tangle.js</a> reactive documents <strike>and the power of  
+the sexiness of <a href="http://worrydream.com/Tangle">Tangle.js</a> reactive documents and the loveliness of <a href="http://shutterstock.github.com/rickshaw/">Rickshaw</a> plots <strike>and the power of  
 
 <a href="http://sympy.org">SymPy</a> symbolic <a href="http://docs.sympy.org/0.7.1/modules/solvers/solvers.html">solvers</a></strike>.
     </p>
@@ -33,7 +33,7 @@ the sexiness of <a href="http://worrydream.com/Tangle">Tangle.js</a> reactive do
                 {% tangledown sample.body %}
                 </div>
             <h3>Want more?</h3>
-            <p>There is more goodness coming, but right now it's pretty much a prototype. Stay tuned!</p>
+            <a href="wiki/mortgage"><img src="{{STATIC_URL}}img/mortgage.png"></a>
             <p><a class="btn primary large" href="https://github.com/bollwyvl/tangledown">Get the code</a></p>
         </div>
     </div>
@@ -53,6 +53,7 @@ the sexiness of <a href="http://worrydream.com/Tangle">Tangle.js</a> reactive do
 <h2>How do I try it?</h2>
 <ul>
     <li>Download it from <a href="https://github.com/bollwyvl/tangledown">GitHub</a></li>
+    <li>Check out the <a href="wiki">examples</a> or the <a href="syntax">syntax</a></li>
 </ul>
 {% endblock %}
 
@@ -63,8 +64,9 @@ the sexiness of <a href="http://worrydream.com/Tangle">Tangle.js</a> reactive do
     <li><a href="https://github.com/bollwyvl">me</a>, for hacking it together,</a></li>
     <li><a href="http://daringfireball.net/">John Gruber</a> for making text awesome,</li>
     <li><a href="http://worrydream.com">Bret Victor</a> for bringing text to life,</li>
-    <li>The SymPy <a href="http://docs.sympy.org/0.7.1/aboutus.html#sympy-development-team">Development Team</a> for making hard things easy,</li>
     <li>the Django <a href="http://docs.djangoproject.com/en/1.3/internals/committers/">Committers</a> and pinax for doing the web right,</li>
+    <li>The guys at <a href="http://www.shutterstock.com/">Shutterstock</a> for breaking <a href="http://mbostock.github.com/d3/">d3</a> in all the right ways,</li>
+    <li>The SymPy <a href="http://docs.sympy.org/0.7.1/aboutus.html#sympy-development-team">Development Team</a> for making hard things easy,</li>
     <li>and many others!</li>
 </ul>
 {% endblock %}
