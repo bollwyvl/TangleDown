@@ -62,5 +62,13 @@
       "name": "syntax", 
       "title": "TangleDown Syntax"
     }
-  }
+  },
+  {
+    "pk": 5, 
+    "model": "luau.wikipage", 
+    "fields": {
+      "body": "If you take out a loan for t[number](principal..1000 dollars) at t[number](0<interest..0.0001 percent_2) in t[number](2011<start) and make a monthly payment of t[number](payment dollars):\r\n\r\n~~~~.initialize\r\n#principal: 100000\r\n#interest: .0475\r\n#start: 2011\r\n#payment: 1000\r\n~~~~\r\n\r\n#month | #remaining\r\n-------|------------\r\n0      | #principal\r\n+1     | * (1 + #interest/12) - #payment\r\n       | >= 0 ", 
+      "name": "mortgage", 
+      "title": "Mortgage"
+    }
 ]

@@ -1,6 +1,7 @@
 <script type="text/javascript">
+    var tangle_{{root}};
     function setUpTangle_{{root}}() {
-    	var tangle_{{root}} = new Tangle($('#{{root}}')[0], {
+         tangle_{{root}} = new Tangle($('#{{root}}')[0], {
     		initialize: function () {
     			    {{ initialize|safe }}
     		    {% if using_sympy %}
