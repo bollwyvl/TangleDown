@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-us">
     
-<!-- Mirrored from localhost:8000/wiki/home/ by HTTrack Website Copier/3.x [XR&CO'2010], Fri, 09 Dec 2011 00:34:05 GMT -->
+<!-- Mirrored from localhost:8000/wiki/home/ by HTTrack Website Copier/3.x [XR&CO'2010], Fri, 16 Dec 2011 06:40:32 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8"><!-- /Added by HTTrack -->
 <head>
         <meta charset="utf-8" />
@@ -29,7 +29,8 @@
         
             
     
-    <script type="text/javascript" src="../../site_media/static/js/json2.js"></script>
+    
+        <script type="text/javascript" src="../../site_media/static/js/json2.js"></script>
 <script type="text/javascript" src="../../site_media/static/js/underscore-min.js"></script>
 
 <!-- Tangle -->
@@ -45,11 +46,23 @@
 <!-- TangleKit -->
 <link rel="stylesheet" href="../../site_media/static/css/TangleKit.css" type="text/css">
 
+
+
+<!-- Rickshaw -->
+<script type="text/javascript" src="../../site_media/static/js/d3.min.js"></script>
+<script type="text/javascript" src="../../site_media/static/js/d3.layout.min.js"></script>
+<script type="text/javascript" src="../../site_media/static/js/rickshaw.min.js"></script>
+
+<link rel="stylesheet" href="../../site_media/static/css/rickshaw.min.css" type="text/css">
+
+
 <!-- TangleDown -->
 <script type="text/javascript" src="../../site_media/static/js/TangleDown.js"></script>
-    <script type="text/javascript">
+<link rel="stylesheet" href="../../site_media/static/css/TangleDown.css" type="text/css">
+        <script type="text/javascript">
+    var tangle_tangle_body;
     function setUpTangle_tangle_body() {
-    	var tangle_tangle_body = new Tangle($('#tangle_body')[0], {
+         tangle_tangle_body = new Tangle($('#tangle_body')[0], {
     		initialize: function () {
     			    this.cookies= 3;
 this.calories= 150;
@@ -72,6 +85,7 @@ this.overninek= this.calories > 9000;
         setUpTangle_tangle_body();
     })
 </script>
+    
 
         
     </head>
@@ -90,6 +104,9 @@ this.overninek= this.calories > 9000;
             <ul class="dropdown-menu">
                 <li>
                     <a href="index.html">Cookies</a>
+                </li>
+                <li>
+                    <a href="../mortgage/index.html">Mortgage</a>
                 </li>
             </ul>
         </li>
@@ -118,13 +135,19 @@ this.overninek= this.calories > 9000;
     <div id="tangle_body">
     <h1>Home 
         
+            
+            <span class="label"><a href="src/index.html">View Source</a></span>
+            
+        
     </h1>
+    
     <p>
         <p>If you eat <span class="TKAdjustableNumber" data-var="cookies"> cookies</span>, you consume <span class="NoneType" data-var="calories"> calories</span>. This constitutes <span class="NoneType" data-format="percent" data-var="dailypercent"></span> of a daily intake of <span class="TKAdjustableNumber" data-min="100" data-step="100" data-var="dailycalories"> calories</span>.</p>
 <span class="TKIf" data-var="overninek"><span class="TKBranchOption"><h1>It's over 9000!</h1></span></span>
 
 
     </p>
+    
     </div>
 
         </div>
@@ -141,11 +164,10 @@ this.overninek= this.calories > 9000;
                 
                 <li><a href="../syntax/index.html">TangleDown Syntax</a></li>
                 
+                <li><a href="../mortgage/index.html">Mortgage</a></li>
+                
             </ul>
-            <form method="get" action="http://localhost:8000/wiki">
-                <input class="span2" type="text" name="new" placeholder="New Page"/>
-                <button class="btn">GO</button>
-            </form>
+            
             
         </div>
     </div>
@@ -175,6 +197,6 @@ this.overninek= this.calories > 9000;
         
     </body>
 
-<!-- Mirrored from localhost:8000/wiki/home/ by HTTrack Website Copier/3.x [XR&CO'2010], Fri, 09 Dec 2011 00:34:05 GMT -->
+<!-- Mirrored from localhost:8000/wiki/home/ by HTTrack Website Copier/3.x [XR&CO'2010], Fri, 16 Dec 2011 06:40:32 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8"><!-- /Added by HTTrack -->
 </html>

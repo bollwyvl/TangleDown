@@ -1,0 +1,26 @@
+.tangle_container{
+    position: relative;
+    font-family: Gill Sans, Gill Sans MT, Helvetica, Tahoma, sans-serif;
+    display: inline-block;
+    width:80%;
+
+}
+.tangle_chart {
+	position: relative;
+	left: 40px;
+}
+.tangle_y_axis {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	width: 40px;
+}
+
+.tangle_legend {
+    display: inline-block;
+    vertical-align: top;
+    margin: 70px 0 0 0px;
+}
+.rickshaw_legend .label{
+    background-color: transparent;
+}

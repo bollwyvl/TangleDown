@@ -1,5 +1,6 @@
 var TangleDown = this.TangleDown = function(){
     
+    
     var log = function(msg){
         if(window.console){
             console.log(msg)
@@ -7,6 +8,9 @@ var TangleDown = this.TangleDown = function(){
     }
     
     return {
+        plots: {},
+        plot_data: {},
+        axes: {},
         tangledownload: _.memoize(
             // synchronous get function 
             function(tangle){
@@ -52,10 +56,15 @@ var TangleDown = this.TangleDown = function(){
 //make it
 TangleDown = this.TangleDown = TangleDown();
 
+
 Tangle.formats.cents_as_dollars = function (value) {
     var dollars = Math.floor(value/100);
     return sprintf("$%d.", dollars) + sprintf("%02d", value - dollars * 100);
 };
+
+Tangle.formats.percent_2 = function(value){
+    return sprintf('%.2f%%', value*100)
+}
 
 Tangle.formats.humanized = function (value) {
     /* Ruthlessly plundered from

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-us">
     
-<!-- Mirrored from localhost:8000/wiki/coins/ by HTTrack Website Copier/3.x [XR&CO'2010], Fri, 09 Dec 2011 00:34:06 GMT -->
+<!-- Mirrored from localhost:8000/wiki/coins/ by HTTrack Website Copier/3.x [XR&CO'2010], Fri, 16 Dec 2011 06:40:37 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8"><!-- /Added by HTTrack -->
 <head>
         <meta charset="utf-8" />
@@ -29,7 +29,8 @@
         
             
     
-    <script type="text/javascript" src="../../site_media/static/js/json2.js"></script>
+    
+        <script type="text/javascript" src="../../site_media/static/js/json2.js"></script>
 <script type="text/javascript" src="../../site_media/static/js/underscore-min.js"></script>
 
 <!-- Tangle -->
@@ -45,11 +46,23 @@
 <!-- TangleKit -->
 <link rel="stylesheet" href="../../site_media/static/css/TangleKit.css" type="text/css">
 
+
+
+<!-- Rickshaw -->
+<script type="text/javascript" src="../../site_media/static/js/d3.min.js"></script>
+<script type="text/javascript" src="../../site_media/static/js/d3.layout.min.js"></script>
+<script type="text/javascript" src="../../site_media/static/js/rickshaw.min.js"></script>
+
+<link rel="stylesheet" href="../../site_media/static/css/rickshaw.min.css" type="text/css">
+
+
 <!-- TangleDown -->
 <script type="text/javascript" src="../../site_media/static/js/TangleDown.js"></script>
-    <script type="text/javascript">
+<link rel="stylesheet" href="../../site_media/static/css/TangleDown.css" type="text/css">
+        <script type="text/javascript">
+    var tangle_tangle_body;
     function setUpTangle_tangle_body() {
-    	var tangle_tangle_body = new Tangle($('#tangle_body')[0], {
+         tangle_tangle_body = new Tangle($('#tangle_body')[0], {
     		initialize: function () {
     			    this.total= 300;
 this.coins= 5;
@@ -70,6 +83,7 @@ this.coins= 5;
         setUpTangle_tangle_body();
     })
 </script>
+    
 
         
     </head>
@@ -88,6 +102,9 @@ this.coins= 5;
             <ul class="dropdown-menu">
                 <li>
                     <a href="../home/index.html">Cookies</a>
+                </li>
+                <li>
+                    <a href="../mortgage/index.html">Mortgage</a>
                 </li>
             </ul>
         </li>
@@ -116,7 +133,12 @@ this.coins= 5;
     <div id="tangle_body">
     <h1>Coins 
         
+            
+            <span class="label"><a href="src/index.html">View Source</a></span>
+            
+        
     </h1>
+    
     <p>
         <p>If you want to make <span class="TKAdjustableNumber" data-format="cents_as_dollars" data-min="0" data-var="total"></span> with <span class="TKAdjustableNumber" data-var="coins"> coins</span>, use <span class="NoneType" data-var="pennies"> pennies</span>, <span class="NoneType" data-var="nickels"> nickels</span>, <span class="NoneType" data-var="dimes"> dimes</span>, <span class="NoneType" data-var="quarters"> quarters</span>, <span class="NoneType" data-var="halfdollars"> halfdollars</span> and <span class="NoneType" data-var="dollars"> dollars</span>.</p>
 
@@ -125,6 +147,7 @@ this.coins= 5;
 
 <p><em>Right now, TangleDown cannot solve this kind of problem. For one, it is underconstrained. Additionally, SymPy doens't solve inequalities in a way that would be easily captured through simple text Markdown. Using OpenMDAO, again, would solve this problem.</em></p>
     </p>
+    
     </div>
 
         </div>
@@ -141,11 +164,10 @@ this.coins= 5;
                 
                 <li><a href="../syntax/index.html">TangleDown Syntax</a></li>
                 
+                <li><a href="../mortgage/index.html">Mortgage</a></li>
+                
             </ul>
-            <form method="get" action="http://localhost:8000/wiki">
-                <input class="span2" type="text" name="new" placeholder="New Page"/>
-                <button class="btn">GO</button>
-            </form>
+            
             
         </div>
     </div>
@@ -175,6 +197,6 @@ this.coins= 5;
         
     </body>
 
-<!-- Mirrored from localhost:8000/wiki/coins/ by HTTrack Website Copier/3.x [XR&CO'2010], Fri, 09 Dec 2011 00:34:06 GMT -->
+<!-- Mirrored from localhost:8000/wiki/coins/ by HTTrack Website Copier/3.x [XR&CO'2010], Fri, 16 Dec 2011 06:40:37 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8"><!-- /Added by HTTrack -->
 </html>

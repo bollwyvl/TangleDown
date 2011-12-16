@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en-us">
     
-<!-- Mirrored from localhost:8000/wiki/sympy/ by HTTrack Website Copier/3.x [XR&CO'2010], Fri, 16 Dec 2011 06:40:36 GMT -->
+<!-- Mirrored from localhost:8000/wiki/mortgage/ by HTTrack Website Copier/3.x [XR&CO'2010], Fri, 16 Dec 2011 06:40:33 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8"><!-- /Added by HTTrack -->
 <head>
         <meta charset="utf-8" />
         <title>tangledown.org : 
-    Sympy
+    Mortgage
 </title>
         <!-- HTML5 shim, for IE6-8 support of HTML elements -->
         <!--[if lt IE 9]>
@@ -64,17 +64,101 @@
     function setUpTangle_tangle_body() {
          tangle_tangle_body = new Tangle($('#tangle_body')[0], {
     		initialize: function () {
-    			    this.cookies= 3;
-this.dailycalories= 2100;
+    			    this.principal= 100000;
+this.interest= .0475;
+this.start= 2011;
+this.payment= 1000;this.month = [];
+this.remaining = [];
+this.paid = [];
+TangleDown.plot_data['695a66_1'] = [{x: 0, y:0}];
+
+TangleDown.plot_data['695a66_2'] = [{x: 0, y:0}];
+
+
+TangleDown.plots['695a66'] = new Rickshaw.Graph( {
+  element: document.querySelector('#plot_695a66'),
+  renderer: 'line',
+  series: [
+    
+    {
+      name: 'Principal',
+      
+      color: 'red',
+      
+      data: TangleDown.plot_data['695a66_1']
+    },
+    
+    {
+      name: 'Total Paid',
+      
+      color: 'steelblue',
+      
+      data: TangleDown.plot_data['695a66_2']
+    }
+    
+  ]
+} );
+
+TangleDown.plots['695a66'].render()
+
+TangleDown.axes['695a66'] = new Rickshaw.Graph.Axis.Time( {
+	graph: TangleDown.plots['695a66']
+} );
+
+
+TangleDown.axes['695a66'].render();
+
+new Rickshaw.Graph.Axis.Y( {
+	graph: TangleDown.plots['695a66'],
+	orientation: 'left',
+	tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
+	element: document.getElementById('y_695a66'),
+} );
+
+new Rickshaw.Graph.Legend( {
+        element: document.querySelector('#legend_695a66'),
+       graph: TangleDown.plots['695a66'],
+} );
+
+new Rickshaw.Graph.HoverDetail( {
+	graph: TangleDown.plots['695a66']
+} );
     		    
-    		        this.__constraints = [["#calories", "#cookies * 50"], ["#calories", "#dailypercent * #dailycalories"]];
-    		        $.extend(this, TangleDown.tangledownload(this))
-    			
     		},
     		update: function () {
     		    
-    		        $.extend(this, TangleDown.tangledownload(this))
-    		    
+    			    this.num_months= this.month.length;this.month = [];
+this.remaining = [];
+this.paid = [];
+this.month.push((this.start - 1970) * 31556926);
+this.remaining.push(this.principal);
+this.paid.push(0);
+var i = 0;
+while((this.remaining[i] >= 0)){
+	this.month.push(this.month[i] +2592000);
+	this.remaining.push(this.remaining[i] * (1 + this.interest/12) - this.payment);
+	this.paid.push(this.paid[i] + this.payment);
+i++;
+}outer_this = this;
+
+    TangleDown.plot_data['695a66_1'].splice(0);
+    _(outer_this.month).map(function(x_v, idx){
+        TangleDown.plot_data['695a66_1'].push({
+            x: x_v, 
+            y: outer_this.remaining[idx]
+        });
+    });
+
+    TangleDown.plot_data['695a66_2'].splice(0);
+    _(outer_this.month).map(function(x_v, idx){
+        TangleDown.plot_data['695a66_2'].push({
+            x: x_v, 
+            y: outer_this.paid[idx]
+        });
+    });
+
+TangleDown.plots['695a66'].update();
+    			
     		}
     	});
     }
@@ -104,7 +188,7 @@ this.dailycalories= 2100;
                     <a href="../home/index.html">Cookies</a>
                 </li>
                 <li>
-                    <a href="../mortgage/index.html">Mortgage</a>
+                    <a href="index.html">Mortgage</a>
                 </li>
             </ul>
         </li>
@@ -131,7 +215,7 @@ this.dailycalories= 2100;
         <div class="span13">
         
     <div id="tangle_body">
-    <h1>Sympy 
+    <h1>Mortgage 
         
             
             <span class="label"><a href="src/index.html">View Source</a></span>
@@ -140,10 +224,18 @@ this.dailycalories= 2100;
     </h1>
     
     <p>
-        <p>If you eat <span class="TKAdjustableNumber" data-var="cookies"> cookies</span>, you consume <span class="NoneType" data-var="calories"> calories</span>. This constitutes <span class="NoneType" data-format="percent" data-var="dailypercent"></span> of a daily intake of <span class="TKAdjustableNumber" data-min="100" data-step="100" data-var="dailycalories"> calories</span>.</p>
+        <p>If you take out a loan for <span class="TKAdjustableNumber" data-format="dollars" data-step="1000" data-var="principal"></span> at <span class="TKAdjustableNumber" data-format="percent_2" data-min="0" data-step="0.0001" data-var="interest"></span> in <span class="TKAdjustableNumber" data-min="2011" data-var="start"></span> and make a monthly payment of <span class="TKAdjustableNumber" data-format="dollars" data-step="25" data-var="payment"></span>, the loan will be paid off in <span class="NoneType" data-var="num_months"></span> months.</p>
 
 
 
+
+
+<h2>Principal Remaining vs Total Paid</h2>
+<div class="tangle_container">
+    <div class="tangle_y_axis" id="y_695a66"></div>
+    <div class="tangle_chart" id="plot_695a66"></div>
+</div>
+<div class="tangle_legend" id="legend_695a66"></div>
     </p>
     
     </div>
@@ -156,13 +248,13 @@ this.dailycalories= 2100;
                 
                 <li><a href="../home/index.html">Home</a></li>
                 
-                <li><a href="index.html">Sympy</a></li>
+                <li><a href="../sympy/index.html">Sympy</a></li>
                 
                 <li><a href="../coins/index.html">Coins</a></li>
                 
                 <li><a href="../syntax/index.html">TangleDown Syntax</a></li>
                 
-                <li><a href="../mortgage/index.html">Mortgage</a></li>
+                <li><a href="index.html">Mortgage</a></li>
                 
             </ul>
             
@@ -195,6 +287,6 @@ this.dailycalories= 2100;
         
     </body>
 
-<!-- Mirrored from localhost:8000/wiki/sympy/ by HTTrack Website Copier/3.x [XR&CO'2010], Fri, 16 Dec 2011 06:40:36 GMT -->
+<!-- Mirrored from localhost:8000/wiki/mortgage/ by HTTrack Website Copier/3.x [XR&CO'2010], Fri, 16 Dec 2011 06:40:33 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8"><!-- /Added by HTTrack -->
 </html>

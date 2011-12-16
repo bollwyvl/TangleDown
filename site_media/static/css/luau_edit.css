@@ -1,0 +1,59 @@
+@import url(../js/codemirror/theme/monokai.css);
+@import url(../js/codemirror/mode/markdown/markdown.css);
+@import url(../js/codemirror/lib/codemirror.css);
+.CodeMirror {
+overflow-y: hidden;
+overflow-x: auto;
+width: 100%;
+height: auto;
+}
+.CodeMirror-scroll {
+-moz-transition: border 0.2s linear 0s,box-shadow 0.2s linear 0s;
+box-shadow: 0 1px 3px rgba(0,0,0,0.1) inset;
+}
+.fullscreen {
+display: block;
+position: absolute;
+top: 40px;
+left: 0;
+width: 100%;
+height: 100%;
+z-index: 99999;
+margin: 0;
+padding: 0;
+border: 0px solid #BBBBBB;
+opacity: 1;
+}
+.fullscreenBar {
+display: block;
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 40px;
+z-index: 99999;
+margin: 0;
+padding: 0;
+border: 0px solid #BBBBBB;
+opacity: 1;
+color: #999;
+}
+.fullscreenBar button{
+  margin: 5px;
+}
+form .row_id_body label {
+float: none;
+display: block;
+width: 100%;
+text-align: left;
+text-indent: 100px;
+}
+form .input_id_body {
+margin-left: 0;
+}
+#submit_edit{
+  float:right;
+}
+#save_edit{
+  float:right;
+}
